@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<head>
-    <title>{{ title }}</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/superhero/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-fiZOWGBt79dIbkt852eb24nKPxYOvAgtp4v4IUFozlwV/WkvlilK1oTVfPorZdV4" crossorigin="anonymous">
-</head>
-<body>
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/superhero/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-fiZOWGBt79dIbkt852eb24nKPxYOvAgtp4v4IUFozlwV/WkvlilK1oTVfPorZdV4" crossorigin="anonymous">
+    </head>
+    <body>
 
-    <div class="head">
-        {% block header %}{% endblock %}
-    </div>
+        <div class="head">
+            {% block header %}{% endblock %}
+        </div>
 
-    <div class="body">
-        {% block body %}{% endblock %}
-    </div>
+        <div class="body">
+            {% block body %}{% endblock %}
+        </div>
 
-    <div class="footer">
-        {% block footer %}{% endblock %}
-    </div>
+        <div class="footer">
+            {% block footer %}{% endblock %}
+        </div>
 
 </body>
+</head>
