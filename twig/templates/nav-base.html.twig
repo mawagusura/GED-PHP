@@ -6,11 +6,12 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
+        {% if connected %}
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" placeholder="Rechercher un fichier" type="text">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Rechercher</button>
                 </form>
             </ul>
 
@@ -19,6 +20,7 @@
                     <a class="nav-link" href="#">John Doe</a>
                 </li>
             </ul>
+         {% endif %}
 
         </div>
     </nav>
