@@ -2,8 +2,8 @@
 <html>
     <head>
         <title>{{ title }}</title>
-        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/superhero/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-fiZOWGBt79dIbkt852eb24nKPxYOvAgtp4v4IUFozlwV/WkvlilK1oTVfPorZdV4" crossorigin="anonymous">
+        <link href="https://bootswatch.com/4/superhero/bootstrap.min.css" rel="stylesheet">
+        {% block others_css_imports %}{% endblock %}
     </head>
     <body>
 
@@ -22,6 +22,5 @@
                 {% include 'twig/templates/footer.twig' %}
             {% endblock %}
         </div>
-
 </body>
 </head>
