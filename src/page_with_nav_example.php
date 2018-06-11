@@ -14,7 +14,7 @@ $twig = new \Twig_Environment($loader);
 // Set a title
 $message = "It works !";
 
-echo $twig->render('twig/pages/nav-example.html.twig', [
+echo $twig->render('./twig/pages/nav-example.html.twig', [
     'title' => 'Authentification',
     'connected' => true
 ]);
