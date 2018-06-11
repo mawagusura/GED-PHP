@@ -7,8 +7,10 @@
     </head>
     <body>
 
-        <div class="head">
-            {% block header %}{% endblock %}
+        <div class="header">
+            {% block header %}
+                {% include 'twig/templates/nav-base.html.twig' %}
+            {% endblock %}
         </div>
 
         <div class="body">
@@ -16,7 +18,9 @@
         </div>
 
         <div class="footer">
-            {% block footer %}{% endblock %}
+            {% block footer %}
+                {% include 'twig/templates/footer.twig' %}
+            {% endblock %}
         </div>
 
 </body>

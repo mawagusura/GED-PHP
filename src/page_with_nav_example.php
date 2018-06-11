@@ -6,15 +6,15 @@
  * Time: 10:00
  */
 
-require_once("./_lib/vendor/autoload.php");
+require_once("../_lib/vendor/autoload.php");
 
-$loader = new \Twig_Loader_Filesystem(__DIR__);
+$loader = new \Twig_Loader_Filesystem(__DIR__.'/..');
 $twig = new \Twig_Environment($loader);
 
 // Set a title
 $message = "It works !";
 
-echo $twig->render('twig/pages/nav-example.html.twig', [
+echo $twig->render('./twig/pages/nav-example.html.twig', [
     'title' => 'Authentification',
     'connected' => false
 ]);
