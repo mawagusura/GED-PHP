@@ -1,0 +1,23 @@
+{% extends 'templates/includes/base-template.html.twig' %}
+
+{#
+    {% block others_css_imports %}
+        <link href="resources/css/login.css" rel="stylesheet">
+    {% endblock %}
+#}
+
+
+{% block body %}
+    <div class="wrapper ">
+        <form class="form-signin jumbotron">
+            <h2 class="form-signin-heading">Se connecter</h2>
+            <input type="text" class="form-control" name="username" placeholder="Adresse mail" required="" autofocus="" />
+            <input type="password" class="form-control" name="password" placeholder="Mot de passe" required=""/>
+            <label class="checkbox">
+                <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Se souvenir de moi
+            </label>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
+            <button class="btn btn-lg btn-secondary btn-outline-primary register">S'enregistrer</button>
+        </form>
+    </div>
+{% endblock %}

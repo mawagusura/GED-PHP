@@ -1,0 +1,37 @@
+{% extends 'includes/base-template.html.twig' %}
+
+{% block body %}
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Notes réseau</li>
+  </ol>
+</nav>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Prenom</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Note</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for row in list %}
+            <tr>
+                <th scope="row">{{loop.index}} </th>
+                <td>{{ row.prenom }}</td>
+                <td>{{row.nom}}</td>
+                <td>{{row.note}} </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

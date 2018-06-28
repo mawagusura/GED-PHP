@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <link href="https://bootswatch.com/4/superhero/bootstrap.min.css" rel="stylesheet">
+        {% block others_css_imports %}{% endblock %}
+    </head>
+    <body>
+
+        <div class="header">
+            {% block header %}
+                {% include 'includes/nav-base.html.twig' %}
+            {% endblock %}
+            {% block other_css_imports %}
+            {% endblock %}
+        </div>
+
+        <div class="body">
+            {% block body %}{% endblock %}
+        </div>
+
+        <div class="footer">
+            {% block footer %}
+                {% include 'includes/footer.twig' %}
+            {% endblock %}
+        </div>
+</body>
+</head>
