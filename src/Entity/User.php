@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -73,7 +73,7 @@ class User implements UserInterface, \Serializable
      *
      * @return string The password
      */
-    public function getPassword() :string
+    public function getPassword() : ?string
     {
         return $this->password;
     }
@@ -103,7 +103,7 @@ class User implements UserInterface, \Serializable
      *
      * @return string The username
      */
-    public function getUsername() : stringl
+    public function getUsername() : ?string
     {
         return $this->username;
     }
