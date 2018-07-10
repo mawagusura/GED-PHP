@@ -5,22 +5,37 @@
     <form name="user" method="post">
         <h3>S'inscrire</h3>
         <hr>
+        {% if errors %}
+                <div class="alert alert-dismissible alert-danger">{{ error_message }}</div>
+        {% endif %}
         <div class="form-group">
-            <label for="form_username">Nom d'utilisateur</label>
-            <input type="text" id="form_username" name="form[username]" required="required" placeholder="Nom d'utilisateur" class="form-control"/>
+            <label for="user_first_name">Nom</label>
+            <input type="text" id="user_first_name" name="user[user_first_name]" required="required" placeholder="Prénom" class="form-control"/>
         </div>
 
         <div class="form-group">
-            <label for="form_username">Mot de passe</label>
-            <input type="password" id="form_password_first" name="form[password][first]" required="required" placeholder="Mot de passe" class="form-control"/>
+            <label for="user_last_name">Prénom</label>
+            <input type="text" id="user_last_name" name="user[user_last_name]" required="required" placeholder="Nom" class="form-control"/>
         </div>
 
         <div class="form-group">
-            <label for="form_username">Répéter le mot de passe</label>
-            <input type="password" id="form_password_second" name="form[password][second]" required="required" placeholder="Répéter mot de passe" class="form-control"/>
+            <label for="user_username">Nom d'utilisateur</label>
+            <input type="text" id="user_username" name="user[username]" required="required" placeholder="Nom d'utilisateur" class="form-control"/>
         </div>
 
-        <button type="submit" class="btn btn-primary">S'inscrire !</button>
+        <div class="form-group">
+            <label for="user_password_first">Mot de passe</label>
+            <input type="password" id="user_password_first" name="user[password][first]" required="required" placeholder="Mot de passe" class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <label for="user_password_second">Répéter le mot de passe</label>
+            <input type="password" id="user_password_second" name="user[password][second]" required="required" placeholder="Répéter mot de passe" class="form-control"/>
+        </div>
+
+        {{ form_row(form._token) }}
+
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
     </form>
 </div>
 

@@ -55,7 +55,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return boolean
      */
-    public function getUserDeleted(): boolean
+    public function getUserDeleted()
     {
         return $this->user_deleted;
     }
@@ -63,7 +63,7 @@ class User implements UserInterface, \Serializable
     /**
      * @param array $user_deleted
      */
-    public function setUserDeleted(boolean $user_deleted): void
+    public function setUserDeleted($user_deleted): void
     {
         $this->user_deleted = $user_deleted;
     }
