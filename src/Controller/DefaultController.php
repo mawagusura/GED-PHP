@@ -10,11 +10,16 @@ namespace App\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-
-    public function index(){
+    /**
+     * @Route("/", name="index")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function index()
+    {
 
         $list[] = array("prenom"=>"Kilian", "nom"=>"Chollet", "note"=>6.3);
         $list[] = array("prenom"=>"Lucas", "nom"=>"Masson", "note"=>10.3);
@@ -27,5 +32,13 @@ class DefaultController extends AbstractController
             'connected' => false,
             'list' => $list
         ]);
+    }
+
+    /**
+     * @Route("/hello", name="hello")
+     * @return string
+     */
+    public function hello(){
+        return "Hello";
     }
 }

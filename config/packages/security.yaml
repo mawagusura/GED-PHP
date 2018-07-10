@@ -1,12 +1,18 @@
 security:
+    encoders:
+        App\Entity\User: bcrypt
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
+        database_users:
+            entity: { class: App\Entity\User, property: username}
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            pattern: ^/
+
+            # permet d'accéder à la page d'accueil sans être connecté
             anonymous: true
 
             # activate different ways to authenticate
@@ -14,11 +20,28 @@ security:
             # http_basic: true
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
-            # form_login: true
+            form_login:
+                # route de page de connexion
+                check_path: security_login
+
+                # route de redirection vers le formulaire de connexion (same)
+                login_path: security_login
+
+                # secure formulaire
+                csrf_token_generator: security.csrf.token_manager
+
+                default_target_path: hello
+
+            logout:
+                path: security_logout
+                target: index
+
             # https://symfony.com/doc/current/security/form_login_setup.html
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: '^/admin', roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+
+
