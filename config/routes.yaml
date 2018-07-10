@@ -14,6 +14,14 @@ user_registration:
     path: /register
     controller: App\Controller\RegistrationController::registerAction
 
+search_file:
+    path: /search
+    controller: App\Controller\SearchController::search
+
+displayResearch:
+    path: /displayResearch
+    controller : App\Controller\SearchController::displayResearch
+    
 home:
     path: /GED/home
     controller: App\Controller\DefaultController::home
