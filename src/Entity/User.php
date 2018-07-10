@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
@@ -20,34 +18,101 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=20, unique=true)
      */
-    private $username;
+    private $user_login;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $password;
+    private $user_password;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $user_first_name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $user_last_name;
 
     /**
      * @var array
      *
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private $user_roles = [];
+
 
     /**
-     * @return id
+     * @var array
+     *
+     * @ORM\Column(type="boolean")
      */
-    public function getId() : integer
+    private $user_deleted;
+
+    /**
+     * @return array
+     */
+    public function getUserDeleted(): array
+    {
+        return $this->user_deleted;
+    }
+
+    /**
+     * @param array $user_deleted
+     */
+    public function setUserDeleted(array $user_deleted): void
+    {
+        $this->user_deleted = $user_deleted;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserId() : int
     {
         return $this->user_id;
     }
 
     /**
+     * @return mixed
+     */
+    public function getUserFirstName()
+    {
+        return $this->user_first_name;
+    }
+
+    /**
+     * @param mixed $user_first_name
+     */
+    public function setUserFirstName($user_first_name): void
+    {
+        $this->user_first_name = $user_first_name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserLastName()
+    {
+        return $this->user_last_name;
+    }
+
+    /**
+     * @param mixed $user_last_name
+     */
+    public function setUserLastName($user_last_name): void
+    {
+        $this->user_last_name = $user_last_name;
+    }
+
+
+    /**
      * @return array
      */
-    public function getRoles(): array
+    public function getUserRoles(): array
     {
-        $roles = $this->roles;
+        $roles = $this->user_roles;
 
         // Afin d'être sûr qu'un user a toujours au moins 1 rôle
         if (empty($roles)) {
@@ -58,11 +123,11 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param array $roles
+     * @param array $user_roles
      */
-    public function setRoles(array $roles): void
+    public function setUserRoles(array $user_roles): void
     {
-        $this->roles = $roles;
+        $this->user_roles = $user_roles;
     }
 
     /**
@@ -73,17 +138,17 @@ class User implements UserInterface, \Serializable
      *
      * @return string The password
      */
-    public function getPassword() : ?string
+    public function getUserPassword() : ?string
     {
-        return $this->password;
+        return $this->user_password;
     }
 
     /**
-     * @param password
+     * @param $user_password
      */
-    public function setPassword(string $password) : void
+    public function setUserPassword(string $user_password) : void
     {
-        $this->password=$password;
+        $this->user_password=$user_password;
     }
 
     /**
@@ -103,14 +168,14 @@ class User implements UserInterface, \Serializable
      *
      * @return string The username
      */
-    public function getUsername() : ?string
+    public function getUserlogin() : ?string
     {
-        return $this->username;
+        return $this->user_login;
     }
 
-    public function setUsername(string $username) : void
+    public function setUserlogin(string $user_login) : void
     {
-        $this->username = $username;
+        $this->user_login = $user_login;
     }
 
     /**
@@ -132,7 +197,7 @@ class User implements UserInterface, \Serializable
      */
     public function serialize()  : string
     {
-        return serialize([$this->user_id, $this->username, $this->password]);
+        return serialize([$this->user_id, $this->user_login, $this->user_password]);
     }
 
     /**
@@ -146,6 +211,6 @@ class User implements UserInterface, \Serializable
      */
     public function unserialize($serialized) : void
     {
-        [$this->user_id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
+        [$this->user_id, $this->user_login, $this->user_password] = unserialize($serialized, ['allowed_classes' => false]);
     }
 }
