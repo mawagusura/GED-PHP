@@ -38,6 +38,9 @@ class RegistrationController extends Controller
             // Par defaut l'utilisateur aura toujours le rôle ROLE_USER
             $user->setRoles(['ROLE_USER']);
 
+            // l'utilisateur n'est pas supprimé
+            $user->setUserDeleted(false);
+
             // On enregistre l'utilisateur dans la base
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
