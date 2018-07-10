@@ -4,9 +4,7 @@ namespace App\Entity;
 
 
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\DocTypesRepository")
- */
+
 class DocTypes implements \Serializable{
 
     
