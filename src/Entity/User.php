@@ -93,7 +93,7 @@ class User implements UserInterface, \Serializable
      *
      * @return string|null The salt
      */
-    public function getSalt() : string
+    public function getSalt() : ?string
     {
         return null;
     }
