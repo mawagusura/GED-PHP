@@ -1,0 +1,17 @@
+{% extends 'includes/base-template.html.twig' %}
+
+{#
+    {% block others_css_imports %}
+        <link href="resources/css/login.css" rel="stylesheet">
+    {% endblock %}
+#}
+
+
+{% block body %}
+    <div class="wrapper ">
+    	<form class="form-signin jumbotron" action="{{ path('search_file') }}" method="post">
+            <h2 class="form-signin-heading">Recherche d'un fichier</h2>
+            <p>{{fichiers}}</p>
+        </form>
+    </div>
+{% endblock %}
