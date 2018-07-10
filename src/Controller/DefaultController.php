@@ -15,16 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-    /**
-     * @Route("/", name="index")
-     */
+
     public function index()
     {
         return $this->render('pages/index.html.twig');
     }
 
     /**
-     * @Route("/home", name="home")
      * @return Response
      */
     public function home(){
