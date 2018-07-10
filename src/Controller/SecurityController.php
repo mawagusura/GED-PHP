@@ -15,10 +15,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    /**
-     * @Route("/login", name="security_login")
-     */
-    public function login(AuthenticationUtils $helper): Response
+
+    public function login(AuthenticationUtils $helper) : Response
     {
         return $this->render('pages/login.html.twig', [
             'title' => "Connexion",
@@ -31,12 +29,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * La route pour se deconnecter.
-     *
-     * Mais celle ci ne doit jamais être executé car symfony l'interceptera avant.
-     *
-     *
-     * @Route("/logout", name="security_logout")
+     * Should never be reached
      */
     public function logout(): void
     {

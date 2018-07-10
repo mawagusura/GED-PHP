@@ -10,17 +10,21 @@ namespace App\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-    /**
-     * @Route("/", name="index")
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
+
     public function index()
     {
+        return $this->render('pages/index.html.twig');
+    }
 
+    /**
+     * @return Response
+     */
+    public function home(){
         $list[] = array("prenom"=>"Kilian", "nom"=>"Chollet", "note"=>6.3);
         $list[] = array("prenom"=>"Lucas", "nom"=>"Masson", "note"=>10.3);
         $list[] = array("prenom"=>"Thomas", "nom"=>"Nouvellon", "note"=>5);
@@ -32,13 +36,5 @@ class DefaultController extends AbstractController
             'connected' => false,
             'list' => $list
         ]);
-    }
-
-    /**
-     * @Route("/hello", name="hello")
-     * @return string
-     */
-    public function hello(){
-        return "Hello";
     }
 }

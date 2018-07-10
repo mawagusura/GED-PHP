@@ -1,0 +1,20 @@
+index:
+    path: /
+    controller: App\Controller\DefaultController::index
+
+security_login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+security_logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
+
+user_registration:
+    path: /register
+    controller: App\Controller\RegistrationController::registerAction
+
+home:
+    path: /GED/home
+    controller: App\Controller\DefaultController::home
+

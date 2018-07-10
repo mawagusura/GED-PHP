@@ -20,7 +20,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegistrationController extends Controller
 {
     /**
-     * @Route("/register", name="user_registration")
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @return Response
@@ -49,7 +48,11 @@ class RegistrationController extends Controller
 
         return $this->render(
             'pages/register.html.twig',
-            array('form' => $form->createView())
+            array(
+                'form' => $form->createView(),
+                'title' => 'S\'inscrire',
+                'connected' => false
+                )
         );
     }
 }
