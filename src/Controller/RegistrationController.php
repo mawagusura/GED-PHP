@@ -49,7 +49,11 @@ class RegistrationController extends Controller
 
         return $this->render(
             'pages/register.html.twig',
-            array('form' => $form->createView())
+            array(
+                'form' => $form->createView(),
+                'title' => 'S\'inscrire',
+                'connected' => false
+                )
         );
     }
 }

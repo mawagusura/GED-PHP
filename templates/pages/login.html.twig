@@ -10,6 +10,9 @@
 {% block body %}
     <div class="wrapper ">
         <form class="form-signin jumbotron" action="{{ path('security_login') }}" method="post">
+            {% if(error) %}
+                <div class="alert-danger">{{ message }}</div>
+            {% endif %}
             <h2 class="form-signin-heading">Se connecter</h2>
             <input type="text" class="form-control" name="_username" placeholder="Adresse mail" required="" autofocus="" />
             <input type="password" class="form-control" name="_password" placeholder="Mot de passe" required=""/>
