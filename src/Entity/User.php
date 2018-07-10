@@ -20,12 +20,12 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=20, unique=true)
      */
-    private $user_login;
+    private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $user_password;
+    private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -42,20 +42,20 @@ class User implements UserInterface, \Serializable
      *
      * @ORM\Column(type="json")
      */
-    private $user_roles = [];
+    private $roles = [];
 
 
     /**
-     * @var array
+     * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
     private $user_deleted;
 
     /**
-     * @return array
+     * @return boolean
      */
-    public function getUserDeleted(): array
+    public function getUserDeleted(): boolean
     {
         return $this->user_deleted;
     }
@@ -63,15 +63,15 @@ class User implements UserInterface, \Serializable
     /**
      * @param array $user_deleted
      */
-    public function setUserDeleted(array $user_deleted): void
+    public function setUserDeleted(boolean $user_deleted): void
     {
         $this->user_deleted = $user_deleted;
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
-    public function getUserId() : int
+    public function getUserId() : integer
     {
         return $this->user_id;
     }
@@ -112,9 +112,9 @@ class User implements UserInterface, \Serializable
     /**
      * @return array
      */
-    public function getUserRoles(): array
+    public function getRoles(): array
     {
-        $roles = $this->user_roles;
+        $roles = $this->roles;
 
         // Afin d'être sûr qu'un user a toujours au moins 1 rôle
         if (empty($roles)) {
@@ -125,11 +125,11 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param array $user_roles
+     * @param array $roles
      */
-    public function setUserRoles(array $user_roles): void
+    public function setRoles(array $roles): void
     {
-        $this->user_roles = $user_roles;
+        $this->roles = $roles;
     }
 
     /**
@@ -140,17 +140,17 @@ class User implements UserInterface, \Serializable
      *
      * @return string The password
      */
-    public function getUserPassword() : ?string
+    public function getPassword() : ?string
     {
-        return $this->user_password;
+        return $this->password;
     }
 
     /**
-     * @param $user_password
+     * @param $password
      */
-    public function setUserPassword(string $user_password) : void
+    public function setPassword(string $password) : void
     {
-        $this->user_password=$user_password;
+        $this->password=$password;
     }
 
     /**
@@ -170,14 +170,14 @@ class User implements UserInterface, \Serializable
      *
      * @return string The username
      */
-    public function getUserlogin() : ?string
+    public function getUsername() : ?string
     {
-        return $this->user_login;
+        return $this->username;
     }
 
-    public function setUserlogin(string $user_login) : void
+    public function setUsername(string $user_login) : void
     {
-        $this->user_login = $user_login;
+        $this->username = $user_login;
     }
 
     /**
@@ -199,7 +199,7 @@ class User implements UserInterface, \Serializable
      */
     public function serialize()  : string
     {
-        return serialize([$this->user_id, $this->user_login, $this->user_password]);
+        return serialize([$this->user_id, $this->username, $this->password]);
     }
 
     /**
@@ -213,6 +213,6 @@ class User implements UserInterface, \Serializable
      */
     public function unserialize($serialized) : void
     {
-        [$this->user_id, $this->user_login, $this->user_password] = unserialize($serialized, ['allowed_classes' => false]);
+        [$this->user_id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
     }
 }
