@@ -32,11 +32,11 @@ class RegistrationController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $password = $passwordEncoder->encodePassword($user, $user->getUserPassword());
-            $user->setUserPassword($password);
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
 
             // Par defaut l'utilisateur aura toujours le rôle ROLE_USER
-            $user->setUserRoles(['ROLE_USER']);
+            $user->setRoles(['ROLE_USER']);
 
             // On enregistre l'utilisateur dans la base
             $em = $this->getDoctrine()->getManager();
