@@ -5,32 +5,40 @@
     <form name="user" method="post">
         <h3>S'inscrire</h3>
         <hr>
-        {% if errors %}
-                <div class="alert alert-dismissible alert-danger">{{ error_message }}</div>
+        {% if form_errors(form) %}
+            <div class="alert alert-dismissible alert-danger">{{ form_errors(form) }}</div>
         {% endif %}
-        <div class="form-group">
+
+        <div class="form-group {% if form_errors(form.user_first_name) %}has-danger{% endif %}">
             <label for="user_first_name">Nom</label>
-            <input type="text" id="user_first_name" name="user[user_first_name]" required="required" placeholder="Prénom" class="form-control"/>
+            <input type="text" id="user_first_name" name="user[user_first_name]" required="required" placeholder="Prénom" class="form-control {% if form_errors(form.user_first_name) %}is-invalid{% endif %}"/>
+            <div class="invalid-feedback">Ce champs est invalide.</div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group {% if form_errors(form.user_last_name) %}has-danger{% endif %}">
             <label for="user_last_name">Prénom</label>
-            <input type="text" id="user_last_name" name="user[user_last_name]" required="required" placeholder="Nom" class="form-control"/>
+            <input type="text" id="user_last_name" name="user[user_last_name]" required="required" placeholder="Nom" class="form-control {% if form_errors(form.user_last_name) %}is-invalid{% endif %}"/>
+            <div class="invalid-feedback">Ce champs est invalide.</div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group {% if form_errors(form.username) %}has-danger{% endif %}">
             <label for="user_username">Nom d'utilisateur</label>
-            <input type="text" id="user_username" name="user[username]" required="required" placeholder="Nom d'utilisateur" class="form-control"/>
+            <input type="text" id="user_username" name="user[username]" required="required" placeholder="Nom d'utilisateur" class="form-control {% if form_errors(form.password.first) %}is-invalid{% endif %}"/>
+            <div class="invalid-feedback">Ce champs est invalide.</div>
         </div>
 
-        <div class="form-group">
+
+        <div class="form-group {% if form_errors(form.password.first) %}has-danger{% endif %}">
             <label for="user_password_first">Mot de passe</label>
-            <input type="password" id="user_password_first" name="user[password][first]" required="required" placeholder="Mot de passe" class="form-control"/>
+            <input type="password" id="user_password_first" name="user[password][first]" required="required" placeholder="Mot de passe" class="form-control {% if form_errors(form.password.first) %}is-invalid{% endif %}"/>
+            <div class="invalid-feedback">Ce champs est invalide.</div>
         </div>
 
-        <div class="form-group">
+
+        <div class="form-group {% if form_errors(form.password.second) %}has-danger{% endif %}">
             <label for="user_password_second">Répéter le mot de passe</label>
-            <input type="password" id="user_password_second" name="user[password][second]" required="required" placeholder="Répéter mot de passe" class="form-control"/>
+            <input type="password" id="user_password_second" name="user[password][second]" required="required" placeholder="Répéter mot de passe" class="form-control {% if form_errors(form.password.first) %}is-invalid{% endif %}"/>
+            <div class="invalid-feedback">Ce champs est invalide.</div>
         </div>
 
         {{ form_row(form._token) }}

@@ -51,16 +51,13 @@ class RegistrationController extends Controller
 
         else if($form->isSubmitted()){
 
-            $errors = $form->getErrors();
-
             return $this->render(
                 'pages/register.html.twig',
                 array(
                     'form' => $form->createView(),
                     'title' => 'S\'inscrire',
                     'connected' => false,
-                    'errors' => true,
-                    'error_message' => $errors->__toString()
+                    'errors' => true
                 )
             );
         }
