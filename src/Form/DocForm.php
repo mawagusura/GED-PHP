@@ -8,7 +8,7 @@
 
 namespace App\Form;
 
-use App\Entity\Docs;
+use App\Entity\Doc;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -35,7 +35,7 @@ class DocForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Docs::class,
+            'data_class' => Doc::class,
         ));
     }
 }

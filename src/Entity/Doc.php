@@ -8,8 +8,13 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 
-class Docs implements \Serializable
+
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\DocRepository")
+ */
+class Doc implements \Serializable
 {
 
     /**
@@ -18,6 +23,60 @@ class Docs implements \Serializable
      * @ORM\Column(type="integer")
      */
     private $doc_id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $doc_name;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $doc_creation;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $doc_description;
+
+    /**
+     * @ORM\Column(type="decimal", length=255)
+     */
+    private $doc_size;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $doc_last_mod;
+
+    /**
+     * @ORM\Column(type="blob")
+     */
+    private $doc_data;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $doc_tags;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DocType")
+     * @ORM\JoinColumn(name="doc_type_id", referencedColumnName="type_id")
+     */
+    private $doc_doc_type;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Dossier")
+     * @ORM\JoinColumn(name="dos_id", referencedColumnName="dos_id")
+     */
+    private $doc_dos;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
+     */
+    private $doc_user;
 
     /**
      * @return mixed
@@ -134,49 +193,49 @@ class Docs implements \Serializable
     /**
      * @return mixed
      */
-    public function getDocDocTypeId()
+    public function getDocDocType() : DocType
     {
-        return $this->doc_doc_type_id;
+        return $this->doc_doc_type;
     }
 
     /**
-     * @param mixed $doc_doc_type_id
+     * @param mixed $doc_doc_type
      */
-    public function setDocDocTypeId($doc_doc_type_id): void
+    public function setDocDocType(DocType $doc_doc_type): void
     {
-        $this->doc_doc_type_id = $doc_doc_type_id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDocDosId()
-    {
-        return $this->doc_dos_id;
-    }
-
-    /**
-     * @param mixed $doc_dos_id
-     */
-    public function setDocDosId($doc_dos_id): void
-    {
-        $this->doc_dos_id = $doc_dos_id;
+        $this->doc_doc_type = $doc_doc_type;
     }
 
     /**
      * @return mixed
      */
-    public function getDocUserId()
+    public function getDocDos() : Dossier
     {
-        return $this->doc_user_id;
+        return $this->doc_dos;
     }
 
     /**
-     * @param mixed $doc_user_id
+     * @param mixed $doc_dos
      */
-    public function setDocUserId($doc_user_id): void
+    public function setDocDos(Dossier $doc_dos): void
     {
-        $this->doc_user_id = $doc_user_id;
+        $this->doc_dos = $doc_dos;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDocUser() : User
+    {
+        return $this->doc_user;
+    }
+
+    /**
+     * @param mixed $doc_user
+     */
+    public function setDocUser(User $doc_user): void
+    {
+        $this->doc_user = $doc_user;
     }
 
     /**
@@ -187,56 +246,7 @@ class Docs implements \Serializable
         return $this->doc_id;
     }
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $doc_name;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $doc_creation;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $doc_description;
-
-    /**
-     * @ORM\Column(type="double", length=255)
-     */
-    private $doc_size;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $doc_last_mod;
-
-    /**
-     * @ORM\Column(type="blob")
-     */
-    private $doc_data;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $doc_tags;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $doc_doc_type_id;
-
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $doc_dos_id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $doc_user_id;
 
     /**
      * String representation of object
@@ -247,7 +257,7 @@ class Docs implements \Serializable
     public function serialize()  : string
     {
         return serialize([$this->doc_id, $this->doc_name, $this->doc_creation,$this->doc_description,$this->doc_size,
-            $this->doc_last_mod,$this->doc_data,$this->doc_tags,$this->doc_user_id,$this->doc_doc_type_id,$this->doc_dos_id]);
+            $this->doc_last_mod,$this->doc_data,$this->doc_tags,$this->doc_user,$this->doc_doc_type,$this->doc_dos]);
     }
 
     /**
@@ -262,6 +272,6 @@ class Docs implements \Serializable
     public function unserialize($serialized) : void
     {
         [$this->doc_id, $this->doc_name, $this->doc_creation,$this->doc_description,$this->doc_size,
-            $this->doc_last_mod,$this->doc_data,$this->doc_tags,$this->doc_user_id,$this->doc_doc_type_id,$this->doc_dos_id] = unserialize($serialized, ['allowed_classes' => false]);
+            $this->doc_last_mod,$this->doc_data,$this->doc_tags,$this->doc_user,$this->doc_doc_type,$this->doc_dos] = unserialize($serialized, ['allowed_classes' => false]);
     }
 }

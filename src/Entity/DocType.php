@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 
 
-
-class DocTypes implements \Serializable{
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\DocTypeRepository")
+ */
+class DocType implements \Serializable{
 
     
     /**

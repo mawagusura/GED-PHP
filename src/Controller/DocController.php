@@ -9,8 +9,9 @@
 namespace App\Controller;
 
 
-use App\Entity\Docs;
+use App\Entity\Doc;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -24,8 +25,8 @@ class DocController extends Controller
      */
     public function getDocumentDetails(int $id):Response
     {
-        $doc=$this->getDoctrine()->getRepository('AppBundle:Docs')->find($id);
-        $doc_type=$this->getDoctrine()->getRepository('AppBundle:DocTypes')->find($doc->getDocDocTypeId());
+        $doc=$this->getDoctrine()->getRepository('AppBundle:Doc')->find($id);
+        $doc_type=$this->getDoctrine()->getRepository('AppBundle:DocType')->find($doc->getDocDocTypeId());
         $doc_dos=$this->getDoctrine()->getRepository('AppBundle:Dossier')->find($doc->getDocDosId());
         $user=$this->getDoctrine()->getRepository('AppBundle:Dossier')->find($doc->getDocUserId());
         return $this->render('view',array(
@@ -41,12 +42,12 @@ class DocController extends Controller
      */
     public function getStatsDocument():Response
     {
-        $types=$this->getDoctrine()->getRepository('AppBundle:DocTypes')->findAll();
+        $types=$this->getDoctrine()->getRepository('AppBundle:DocType')->findAll();
         $res=array(count($types));
         for($i=0;$i<count($types);$i++){
-            array_push($res,$types[$i]->getTypeName(),count($this->getDoctrine()->getRepository('AppBundle:Docs')->findBy(array('$doc_doc_type_id'=>$types($i)->getTypeId()))));
+            array_push($res,$types[$i]->getTypeName(),count($this->getDoctrine()->getRepository('AppBundle:Doc')->findBy(array('$doc_doc_type_id'=>$types($i)->getTypeId()))));
         }
-        $docs=$this->getDoctrine()->getRepository('AppBundle:Docs')->findAll();
+        $docs=$this->getDoctrine()->getRepository('AppBundle:Doc')->findAll();
         $sizeTotal=0;
         foreach($docs as $doc){
             $sizeTotal=$doc->getDocSize();
@@ -64,7 +65,7 @@ class DocController extends Controller
      */
     public function createDocument(Request $request):Response
     {
-        $doc=new Docs();
+        $doc=new Doc();
         $form = $this->createForm(UserType::class,$doc);
 
         $form->handleRequest($request);

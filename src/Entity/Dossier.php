@@ -8,7 +8,11 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\DossierRepository")
+ */
 class Dossier implements \Serializable
 {
 
@@ -20,54 +24,70 @@ class Dossier implements \Serializable
     private $dos_id;
 
     /**
-     * @return mixed
+     * @ORM\Column(type="string", length=255)
      */
-    public function getDosId()
+    private $dos_name;
+
+
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     * @ORM\OneToMany(targetEntity="Dossier", mappedBy="dos_parent")
+     */
+    private $dos_children;
+
+    /**
+     * @var Dossier
+     * @ORM\ManyToOne(targetEntity="Dossier", inversedBy="dos_children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="dos_id")
+     *
+     */
+    private $dos_parent;
+
+    public function __construct(){
+        $this->dos_children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getDosId() : int
     {
         return $this->dos_id;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getDosName()
+    public function getDosName() : string
     {
         return $this->dos_name;
     }
 
     /**
-     * @param mixed $dos_name
+     * @param string $dos_name
      */
-    public function setDosName($dos_name): void
+    public function setDosName(string $dos_name): void
     {
         $this->dos_name = $dos_name;
     }
 
     /**
-     * @return mixed
+     * @return Dossier
      */
-    public function getDosDosId()
+    public function getDosParent() : Dossier
     {
-        return $this->dos_dos_id;
+        return $this->dos_parent;
     }
 
     /**
-     * @param mixed $dos_dos_id
+     * @param mixed $dos_parent
      */
-    public function setDosDosId($dos_dos_id): void
+    public function setDosParent(Dossier $dos_parent): void
     {
-        $this->dos_dos_id = $dos_dos_id;
+        $this->dos_parent = $dos_parent;
     }
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $dos_name;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $dos_dos_id;
 
     /**
      * String representation of object
@@ -77,7 +97,7 @@ class Dossier implements \Serializable
      */
     public function serialize()  : string
     {
-        return serialize([$this->dos_id, $this->dos_name, $this->dos_dos_id]);
+        return serialize([$this->dos_id, $this->dos_name, $this->dos_parent]);
     }
 
     /**
@@ -91,6 +111,6 @@ class Dossier implements \Serializable
      */
     public function unserialize($serialized) : void
     {
-        [$this->dos_id, $this->dos_name, $this->dos_dos_id] = unserialize($serialized, ['allowed_classes' => false]);
+        [$this->dos_id, $this->dos_name, $this->dos_parent] = unserialize($serialized, ['allowed_classes' => false]);
     }
 }
