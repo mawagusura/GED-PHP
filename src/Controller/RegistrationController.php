@@ -32,7 +32,7 @@ class RegistrationController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $password = $passwordEncoder->encodePassword($user, $user->getUserPassword());
             $user->setPassword($password);
 
             // Par defaut l'utilisateur aura toujours le rôle ROLE_USER

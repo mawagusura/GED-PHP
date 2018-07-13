@@ -112,7 +112,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return array
      */
-    public function getRoles(): array
+    public function getUserRoles(): array
     {
         $roles = $this->roles;
 
@@ -140,7 +140,7 @@ class User implements UserInterface, \Serializable
      *
      * @return string The password
      */
-    public function getPassword() : ?string
+    public function getUserPassword() : ?string
     {
         return $this->password;
     }
@@ -170,7 +170,7 @@ class User implements UserInterface, \Serializable
      *
      * @return string The username
      */
-    public function getUsername() : ?string
+    public function getUserlogin() : ?string
     {
         return $this->username;
     }
