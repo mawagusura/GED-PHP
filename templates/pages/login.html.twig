@@ -1,27 +1,31 @@
 {% extends 'includes/base-template.html.twig' %}
 
-{#
-    {% block others_css_imports %}
-        <link href="resources/css/login.css" rel="stylesheet">
-    {% endblock %}
-#}
-
-
 {% block body %}
-    <div class="wrapper ">
-        <form class="form-signin jumbotron" action="{{ path('security_login') }}" method="post">
-            {% if(error) %}
-                <div class="alert-danger">{{ message }}</div>
+    <div class="col-lg-4 mx-auto jumbotron form ">
+        <form action="{{ path('security_login') }}" method="post">
+            {% if form_errors(form) %}
+                <div class="alert alert-dismissible alert-danger">{{ form_errors(form) }}</div>
             {% endif %}
-            <h2 class="form-signin-heading">Se connecter</h2>
-            <input type="text" class="form-control" name="_username" placeholder="Adresse mail" required="" autofocus="" />
-            <input type="password" class="form-control" name="_password" placeholder="Mot de passe" required=""/>
+            <h3 class="form-signin-heading">Se connecter</h3>
+            <div class="form-group {% if form_errors(form.user_first_name) %}has-danger{% endif %}">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" id="username" name="form[login]" required="required" placeholder="Nom d'utilisateur" class="form-control {% if form_errors(form.username) %}is-invalid{% endif %}"/>
+                <div class="invalid-feedback">Ce champs est invalide.</div>
+            </div>
+
+            <div class="form-group {% if form_errors(form.user_last_name) %}has-danger{% endif %}">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="form[password]" required="required" placeholder="Mot de passe" class="form-control {% if form_errors(form.password) %}is-invalid{% endif %}"/>
+                <div class="invalid-feedback">Ce champs est invalide.</div>
+            </div>
+
             <label class="checkbox">
                 <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Se souvenir de moi
             </label>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+
             <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
-            <button class="btn btn-lg btn-secondary btn-outline-primary register">S'enregistrer</button>
+            <button class="btn btn-lg btn-success register mx-auto col-lg-12 mt-2">S'enregistrer</button>
         </form>
     </div>
 {% endblock %}
