@@ -3,20 +3,20 @@
 {% block body %}
     <div class="col-lg-4 mx-auto jumbotron form ">
         <form action="{{ path('security_login') }}" method="post">
-            {% if form_errors(form) %}
-                <div class="alert alert-dismissible alert-danger">{{ form_errors(form) }}</div>
-            {% endif %}
+
             <h3 class="form-signin-heading">Se connecter</h3>
-            <div class="form-group {% if form_errors(form.user_first_name) %}has-danger{% endif %}">
+
+            {% if error %}
+                <div class="alert alert-dismissible alert-danger">Nom d'utilisateur ou mot de passe incorrect.</div>
+            {% endif %}
+            <div class="form-group">
                 <label for="username">Nom d'utilisateur</label>
-                <input type="text" id="username" name="form[login]" required="required" placeholder="Nom d'utilisateur" class="form-control {% if form_errors(form.username) %}is-invalid{% endif %}"/>
-                <div class="invalid-feedback">Ce champs est invalide.</div>
+                <input type="text" id="username" name="_username" required="required" placeholder="Nom d'utilisateur" class="form-control"/>
             </div>
 
-            <div class="form-group {% if form_errors(form.user_last_name) %}has-danger{% endif %}">
+            <div class="form-group">
                 <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="form[password]" required="required" placeholder="Mot de passe" class="form-control {% if form_errors(form.password) %}is-invalid{% endif %}"/>
-                <div class="invalid-feedback">Ce champs est invalide.</div>
+                <input type="password" id="password" name="_password" required="required" placeholder="Mot de passe" class="form-control"/>
             </div>
 
             <label class="checkbox">
@@ -25,7 +25,9 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
-            <button class="btn btn-lg btn-success register mx-auto col-lg-12 mt-2">S'enregistrer</button>
+            <a href="{{ path('user_registration') }}">
+                <button class="btn btn-lg btn-success register mx-auto col-lg-12 mt-2">S'enregistrer</button>
+            </a>
         </form>
     </div>
 {% endblock %}
