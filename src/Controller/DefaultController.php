@@ -33,7 +33,7 @@ class DefaultController extends AbstractController
 
         return $this->render('pages/home.html.twig',[
             'title' => 'Home',
-            'connected' => false,
+            'connected' => true,
             'list' => $list
         ]);
     }
