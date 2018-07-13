@@ -56,8 +56,7 @@ class RegistrationController extends Controller
                 array(
                     'form' => $form->createView(),
                     'title' => 'S\'inscrire',
-                    'connected' => false,
-                    'errors' => true
+                    'connected' => false
                 )
             );
         }
@@ -68,8 +67,7 @@ class RegistrationController extends Controller
             array(
                 'form' => $form->createView(),
                 'title' => 'S\'inscrire',
-                'connected' => false,
-                'errors' => false
+                'connected' => false
                 )
         );
     }
