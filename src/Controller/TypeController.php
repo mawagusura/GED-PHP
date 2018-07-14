@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Entity\DocType;
+use App\Form\TypeForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,7 +27,7 @@ class TypeController extends Controller
     public function createType(Request $request):Response
     {
         $type= new DocType();
-        $form = $this->createForm(DocType::class,$type);
+        $form = $this->createForm(TypeForm::class,$type);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
