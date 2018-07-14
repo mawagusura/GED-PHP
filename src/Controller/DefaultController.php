@@ -18,7 +18,9 @@ class DefaultController extends AbstractController
 
     public function index()
     {
-        return $this->render('pages/index.html.twig');
+        return $this->render('pages/index.html.twig', [
+        'title' => "Accueil GED"
+        ]);
     }
 
     /**
