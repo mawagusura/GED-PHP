@@ -84,6 +84,6 @@ class DocController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($doc);
         $em->flush();
-        return $this->redirectToRoute('pages/search.html.twig');
+        return $this->redirectToRoute('pages/home.html.twig');
     }
 }
