@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,7 +17,7 @@ class User implements UserInterface, \Serializable
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $user_id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=20, unique=true)
@@ -53,6 +55,16 @@ class User implements UserInterface, \Serializable
     private $user_deleted;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\File", mappedBy="author", orphanRemoval=true)
+     */
+    private $files;
+
+    public function __construct()
+    {
+        $this->files = new ArrayCollection();
+    }
+
+    /**
      * @return boolean
      */
     public function getUserDeleted()
@@ -71,9 +83,9 @@ class User implements UserInterface, \Serializable
     /**
      * @return integer
      */
-    public function getUserId() : integer
+    public function getId() : int
     {
-        return $this->user_id;
+        return $this->id;
     }
 
     /**
@@ -199,7 +211,7 @@ class User implements UserInterface, \Serializable
      */
     public function serialize()  : string
     {
-        return serialize([$this->user_id, $this->username, $this->password]);
+        return serialize([$this->id, $this->username, $this->password]);
     }
 
     /**
@@ -213,6 +225,37 @@ class User implements UserInterface, \Serializable
      */
     public function unserialize($serialized) : void
     {
-        [$this->user_id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
+        [$this->id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    /**
+     * @return Collection|File[]
+     */
+    public function getFiles(): Collection
+    {
+        return $this->files;
+    }
+
+    public function addFile(File $file): self
+    {
+        if (!$this->files->contains($file)) {
+            $this->files[] = $file;
+            $file->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFile(File $file): self
+    {
+        if ($this->files->contains($file)) {
+            $this->files->removeElement($file);
+            // set the owning side to null (unless already changed)
+            if ($file->getAuthor() === $this) {
+                $file->setAuthor(null);
+            }
+        }
+
+        return $this;
     }
 }

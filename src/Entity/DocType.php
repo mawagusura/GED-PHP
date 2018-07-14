@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -16,20 +18,30 @@ class DocType implements \Serializable{
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $type_id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $type_name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\File", mappedBy="type")
+     */
+    private $files;
+
+    public function __construct()
+    {
+        $this->files = new ArrayCollection();
+    }
+
 
     /**
      * @return mixed
      */
-    public function getTypeId() : int
+    public function getId() : int
     {
-        return $this->type_id;
+        return $this->id;
     }
 
     /**
@@ -68,5 +80,36 @@ class DocType implements \Serializable{
     public function unserialize($serialized) : void
     {
         [$this->type_id, $this->type_name] = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    /**
+     * @return Collection|File[]
+     */
+    public function getFiles(): Collection
+    {
+        return $this->files;
+    }
+
+    public function addFile(File $file): self
+    {
+        if (!$this->files->contains($file)) {
+            $this->files[] = $file;
+            $file->setType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFile(File $file): self
+    {
+        if ($this->files->contains($file)) {
+            $this->files->removeElement($file);
+            // set the owning side to null (unless already changed)
+            if ($file->getType() === $this) {
+                $file->setType(null);
+            }
+        }
+
+        return $this;
     }
 }
