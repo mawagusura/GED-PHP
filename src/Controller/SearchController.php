@@ -24,16 +24,24 @@ class SearchController extends AbstractController
 
         
         $filtre=$req->request->get('filtre');
-        print_r($filtre);
-
-
-        $sql="select * from doc where doc_name LIKE :doc_name;";
-        $params['doc_name'] ='%'.$filtre.'%';
+        $researchTag=preg_split("/[\s,]+/",$filtre);
+        
+        for ($i = 0; $i <count($researchTag) ; $i++) {
+            print(' '.$researchTag[$i]);
+            $params['test'.$i]='%'.$researchTag[$i].'%';
+        }
+        print_r($params);
+        $sql="select * from doc where doc_name LIKE :test"."0 ". "or doc_name LIKE :test1";
+        
+        
+        
         $stmt = $this->getDoctrine()->getManager();
         $stmt=$stmt->getConnection()->prepare($sql);
         $stmt->execute($params);
         $result=$stmt->fetchAll();
+
         print_r($result);
+
         return $this->render('pages/search.html.twig',[
             'title' => "Recherche d'un fichier",
             'connected' => true,
