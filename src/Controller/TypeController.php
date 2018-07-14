@@ -11,10 +11,11 @@ namespace App\Controller;
 
 use App\Entity\DocType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Flex\Response;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class TypeController extends AbstractController
+class TypeController extends Controller
 {
 
     /**
@@ -33,6 +34,6 @@ class TypeController extends AbstractController
             $em->persist($type);
             $em->flush();
         }
-        return $this->redirectToRoute('pages/home.html.twig');
+        return $this->render('pages/home.html.twig');
     }
 }
