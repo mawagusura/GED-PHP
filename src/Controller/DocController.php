@@ -9,7 +9,8 @@
 namespace App\Controller;
 
 
-use App\Entity\Doc;
+use App\Entity\File;
+use App\Form\DocForm;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,14 +27,8 @@ class DocController extends Controller
     public function getDocumentDetails(int $id):Response
     {
         $doc=$this->getDoctrine()->getRepository('AppBundle:Doc')->find($id);
-        $doc_type=$this->getDoctrine()->getRepository('AppBundle:DocType')->find($doc->getDocDocTypeId());
-        $doc_dos=$this->getDoctrine()->getRepository('AppBundle:Dossier')->find($doc->getDocDosId());
-        $user=$this->getDoctrine()->getRepository('AppBundle:Dossier')->find($doc->getDocUserId());
-        return $this->render('view',array(
-            'doc'=>$doc,
-            'type'=>$doc_type->getTypeName(),
-            'dossier'=>$doc_dos->getDosName(),
-            'username'=>$user->getUsername()
+        return $this->render('pages/doc-details.html.twig',array(
+            'doc'=>$doc
         ));
     }
 
@@ -50,9 +45,9 @@ class DocController extends Controller
         $docs=$this->getDoctrine()->getRepository('AppBundle:Doc')->findAll();
         $sizeTotal=0;
         foreach($docs as $doc){
-            $sizeTotal=$doc->getDocSize();
+            $sizeTotal+=$doc->getSize();
         }
-        return $this->render('view',array(
+        return $this->render('pages/stats.html.twig',array(
             'sizeTotal'=>$sizeTotal,
             'typeFile'=>$res
         ));
@@ -63,18 +58,32 @@ class DocController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function createDocument(Request $request):Response
+    public function createDocument(Request $request) :Response
     {
-        $doc=new Doc();
-        $form = $this->createForm(UserType::class,$doc);
+        $doc= new File();
+        $form = $this->createForm(DocForm::class,$doc);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($doc);
             $em->flush();
         }
 
+        return $this->redirectToRoute('doc_details');
+    }
 
+    /**
+     * @param int $id
+     * @return Response
+     */
+    public function deleteDocument(int $id): Response
+    {
+        $doc = $this->getDoctrine()->getRepository('AppBundle:Doc')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($doc);
+        $em->flush();
+        return $this->redirectToRoute('pages/search.html.twig');
     }
 }
