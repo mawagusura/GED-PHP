@@ -1,7 +1,39 @@
 {% extends 'includes/base-template.html.twig' %}
-<script src="../../node_modules/print-js/src/js/print.js"></script>
-<link rel="stylesheet" type="text/css" href="../../node_modules/print-js/src/css/print.css">
+
+{% block javascripts %}
+    <script src="../../node_modules/print-js/src/js/print.js"></script>
+{% endblock %}
+
+ {% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="../../node_modules/print-js/src/css/print.css">
+ {%  endblock %}
 {% block body %}
+    <div>
+        <label>Nom</label>:&nbsp<label>{{ doc.name }}</label>
+    </div>
+    <div>
+        <label>Auteur</label>:&nbsp<label>{{ doc.author.username }}</label>
+    </div>
+    <div>
+        <label>Description</label>:&nbsp<label>{{ doc.description}}</label>
+    </div>
+    <div>
+        <label>Type</label>:&nbsp<label>{{ doc.type.typeName }}</label>
+    </div>
+    <div>
+        <label>Date de création</label>:&nbsp<label>{{ doc.dateCreation|date('d-m-y')}}</label>
+    </div>
+    <div>
+        <label>Taille</label>:&nbsp<label>{{ doc.size }}</label>
+    </div>
+    <div>
+        <label>Dernière modification le</label>:&nbsp<label>{{ doc.dateLastModification|date('d-m-y')}}</label>
+    </div>
+    <div>
+        <label>Tags</label>:&nbsp<label>{{ doc.tags }}</label>
+    </div>
+
+
 
 
 {% endblock %}

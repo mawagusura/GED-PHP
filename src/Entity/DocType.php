@@ -49,7 +49,7 @@ class DocType implements \Serializable{
      */
     public function getTypeName(): string
     {
-        return $this->getTypeName();
+        return $this->type_name;
     }
 
     public function setTypeName(string $typeName)

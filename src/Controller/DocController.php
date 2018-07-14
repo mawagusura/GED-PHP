@@ -26,9 +26,11 @@ class DocController extends Controller
      */
     public function getDocumentDetails(int $id):Response
     {
-        $doc=$this->getDoctrine()->getRepository('AppBundle:Doc')->find($id);
+        $doc=$this->getDoctrine()->getRepository('App:File')->find($id);
         return $this->render('pages/doc-details.html.twig',array(
-            'doc'=>$doc
+            'doc'=>$doc,
+            'connected'=> true,
+            'title'=>"Details"
         ));
     }
 
@@ -71,7 +73,7 @@ class DocController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('doc_details');
+        return $this->render('doc_details');
     }
 
     /**
@@ -84,6 +86,6 @@ class DocController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($doc);
         $em->flush();
-        return $this->redirectToRoute('pages/home.html.twig');
+        return $this->render('pages/home.html.twig');
     }
 }
