@@ -28,6 +28,9 @@ class DefaultController extends AbstractController
     public function home(Request $request){
 
         $rootID = $request->query->get('folderID');
+        if($rootID == NULL) {
+            $rootID = 1;
+        }
         $root = $this->getDoctrine()->getRepository('App:Folder')->find($rootID);
 
         // Fetch the list of the parents
