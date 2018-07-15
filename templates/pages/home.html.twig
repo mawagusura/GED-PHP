@@ -54,7 +54,7 @@
         {% for file in listFile %}
             <tr>
                 <th scope="row"> </th>
-                <td>{{ file.name }}</td>
+                <td><a href="{{ path('doc_details',  {'id' : file.id}) }}">{{ file.name }}</a></td>
                 <td>{{ file.dateLastModification }}</td>
                 <td>{{ file.type.typeName }} </td>
                 <td>{{ file.size }} </td>

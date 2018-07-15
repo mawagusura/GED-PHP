@@ -26,18 +26,18 @@ class SearchController extends AbstractController
         $filtre=$req->request->get('filtre');
         $researchTag=preg_split("/[\s,]+/",$filtre);
         
-        $sql="select * from doc where doc_name LIKE :filtre0";
+        $sql="select * from file where name LIKE :filtre0";
         $params['filtre0']='%'.$researchTag[0].'%';
 
         for ($i = 1; $i <count($researchTag) ; $i++) {
             print(' '.$researchTag[$i]);
             $params['filtre'.$i]='%'.$researchTag[$i].'%';
-            $sql=$sql." OR doc_name LIKE :filtre".$i;
+            $sql=$sql." OR name LIKE :filtre".$i;
         }
         print_r($params);
         
         for($i = 0; $i <count($researchTag) ; $i++){
-            $sql=$sql." OR doc_tags LIKE :filtre".$i;
+            $sql=$sql." OR tags LIKE :filtre".$i;
 
         }
         
