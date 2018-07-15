@@ -8,10 +8,9 @@
 
 namespace App\Controller;
 
-
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
@@ -26,13 +25,32 @@ class DefaultController extends AbstractController
     /**
      * @return Response
      */
-    public function home(){
+    public function home(Request $request){
+
+        $rootID = $request->query->get('folderID');
+        $root = $this->getDoctrine()->getRepository('App:Folder')->find($rootID);
+
+        // Fetch the list of the parents
+        $parents = array();
+        $parent = $root;
+        while($parent->getId() != 1) {
+            $parents[] = $parent;
+            $parent = $root->getParent();
+        }
+        // Put them in the good order (by deepness)
+        array_reverse($parents);
+
+        // Fetch all files and directories
+        $folders = $this->getDoctrine()->getRepository('App:Folder')->findBy(array('parent'=> $root->getId()));
+        $files = $this->getDoctrine()->getRepository('App:File')->findBy(array('folder'=> $root->getId()));
 
         return $this->render('pages/home.html.twig',[
-            'title' => 'Home',
+            'title' => 'Navigation',
             'connected' => true,
-            'listFolder'=>$this->getDoctrine()->getRepository('App:Folder')->findBy(array('parent'=>1)),
-            'listFile' => $this->getDoctrine()->getRepository('App:File')->findBy(array('folder'=>1))
+            'root_folder' => $root,
+            'parents' => $parents,
+            'listFolder'=> $folders,
+            'listFile' => $files
         ]);
     }
 }

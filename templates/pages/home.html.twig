@@ -3,10 +3,20 @@
 {% block body %}
 
 <nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Notes réseau</li>
-  </ol>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href="{{ path('home') ~ '?folderID=1'}}">Racine</a></li>
+        {% for folder in parents %}
+            {% if folder.getId == root_folder.getId %}
+                <li class="breadcrumb-item active" aria-current="page">
+                    <a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a>
+                </li>
+            {% else %}
+                <li class="breadcrumb-item" aria-current="page">
+                    <a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ol>
 </nav>
 
 <div>
@@ -23,24 +33,24 @@
         </thead>
 
         <tbody>
-        {% for row in listFolder %}
+        {% for folder in listFolder if folder.getId != 1 %}
             <tr>
                 <th scope="row"> </th>
-                <td>{{ row.name }}</td>
+                <td><a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a></td>
                 <td></td>
                 <td>folder</td>
                 <td></td>
                 <td></td>
             </tr>
         {% endfor %}
-        {% for row in listFile %}
+        {% for file in listFile %}
             <tr>
                 <th scope="row"> </th>
-                <td>{{ row.name }}</td>
-                <td>{{ row.dateLastModification }}</td>
-                <td>{{ row.type.typeName }} </td>
-                <td>{{ row.size }} </td>
-                <td>{{ row.author.username }} </td>
+                <td>{{ file.name }}</td>
+                <td>{{ file.dateLastModification }}</td>
+                <td>{{ file.type.typeName }} </td>
+                <td>{{ file.size }} </td>
+                <td>{{ file.author.username }} </td>
             </tr>
         {% endfor %}
         </tbody>

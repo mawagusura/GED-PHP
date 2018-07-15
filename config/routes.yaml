@@ -21,7 +21,7 @@ search_file:
 displayResearch:
     path: /displayResearch
     controller : App\Controller\SearchController::displayResearch
-    
+
 home:
     path: /GED/home
     controller: App\Controller\DefaultController::home
