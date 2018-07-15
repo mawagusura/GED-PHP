@@ -33,11 +33,11 @@
     </div>
 
     {% block javascripts %}
-        <script src="../../node_modules/print-js/dist/print.js"></script>
+        <script src="{{ asset('js/print-js/dist/print.js') }}"></script>
     {% endblock %}
 
     {% block stylesheets %}
-        <link rel="stylesheet" type="text/css" href="../../node_modules/print-js/src/css/print.css">
+        <link rel="{{ asset('js/print-js/dist/print.min.css') }}">
     {%  endblock %}
 
 {% endblock %}

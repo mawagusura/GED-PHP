@@ -1,4 +1,4 @@
-import 'print-js/dist/print';
+import 'dist/print';
 
 declare type PrintTypes = 'pdf' | 'html' | 'image' | 'json';
 

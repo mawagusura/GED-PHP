@@ -24,7 +24,7 @@ class Folder
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\File", mappedBy="relation")
+     * @ORM\OneToMany(targetEntity="App\Entity\File", mappedBy="folder")
      */
     private $files;
 

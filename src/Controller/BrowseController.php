@@ -9,7 +9,7 @@
 namespace App\Controller;
 
 
-use App\Repository\DossierRepository;
+use App\Repository\FolderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Tests\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,9 +22,9 @@ class BrowseController extends AbstractController
      * @param DossierRepository $dossierRepository
      * @Route(path="/browse", name="browse")
      */
-    public function browse(DossierRepository $dossierRepository){
+    public function browse(FolderRepository $folderRepository){
 
-        $racine = $dossierRepository->find(1);
+        $racine = $folderRepository->find(1);
 
         $this->render('pages/browse.html.twig', [
             "dossier" => $racine
