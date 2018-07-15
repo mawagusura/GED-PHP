@@ -31,7 +31,8 @@ class DefaultController extends AbstractController
         return $this->render('pages/home.html.twig',[
             'title' => 'Home',
             'connected' => true,
-            'list' => $this->getDoctrine()->getRepository('App:File')->findAll()
+            'listFolder'=>$this->getDoctrine()->getRepository('App:Folder')->findBy(array('parent'=>1)),
+            'listFile' => $this->getDoctrine()->getRepository('App:File')->findBy(array('folder'=>1))
         ]);
     }
 }

@@ -23,7 +23,17 @@
         </thead>
 
         <tbody>
-        {% for row in list %}
+        {% for row in listFolder %}
+            <tr>
+                <th scope="row"> </th>
+                <td>{{ row.name }}</td>
+                <td></td>
+                <td>folder</td>
+                <td></td>
+                <td></td>
+            </tr>
+        {% endfor %}
+        {% for row in listFile %}
             <tr>
                 <th scope="row"> </th>
                 <td>{{ row.name }}</td>
