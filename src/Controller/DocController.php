@@ -37,21 +37,29 @@ class DocController extends Controller
     /**
      * @return Response
      */
-    public function getStatsDocument():Response
+    public function stats():Response
     {
-        $types=$this->getDoctrine()->getRepository('AppBundle:DocType')->findAll();
-        $res=array(count($types));
+        $types=$this->getDoctrine()->getRepository('App:DocType')->findAll();
+        $name=array(count($types));
+        $value=array(count($types));
+
         for($i=0;$i<count($types);$i++){
-            array_push($res,$types[$i]->getTypeName(),count($this->getDoctrine()->getRepository('AppBundle:Doc')->findBy(array('$doc_doc_type_id'=>$types($i)->getTypeId()))));
+            $name[$i]=$types[$i]->getTypeName();
         }
-        $docs=$this->getDoctrine()->getRepository('AppBundle:Doc')->findAll();
+        for($i=0;$i<count($types);$i++) {
+            $value[$i]= count($this->getDoctrine()->getRepository('App:File')->findBy(array('type_id' => $types($i)->getId())));
+        }
+        $docs=$this->getDoctrine()->getRepository('App:File')->findAll();
         $sizeTotal=0;
         foreach($docs as $doc){
             $sizeTotal+=$doc->getSize();
         }
         return $this->render('pages/stats.html.twig',array(
+            'title'=>"Stats",
+            'connected'=>true,
             'sizeTotal'=>$sizeTotal,
-            'typeFile'=>$res
+            'names'=>$name,
+            'values'=>$value
         ));
     }
 
@@ -82,7 +90,7 @@ class DocController extends Controller
      */
     public function deleteDocument(int $id): Response
     {
-        $doc = $this->getDoctrine()->getRepository('AppBundle:Doc')->find($id);
+        $doc = $this->getDoctrine()->getRepository('App:Doc')->find($id);
         $em = $this->getDoctrine()->getManager();
         $em->remove($doc);
         $em->flush();

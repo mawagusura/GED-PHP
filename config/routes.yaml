@@ -26,3 +26,6 @@ home:
     path: /GED/home
     controller: App\Controller\DefaultController::home
 
+stats:
+    path: /GED/stats
+    controller: App\Controller\DocController::stats

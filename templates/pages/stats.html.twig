@@ -1,5 +1,29 @@
 {% extends 'includes/base-template.html.twig' %}
 
 {% block body %}
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Taille totale</th>
+                {% for name in names %}
+                <th scope="col">{{ name }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <th scope="row"> </th>
+                    <td>{{ sizeTotal }}</td>
+                    {% for value in values %}
+                        <th scope="col">{{ value }}</th>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
 
 {% endblock %}
