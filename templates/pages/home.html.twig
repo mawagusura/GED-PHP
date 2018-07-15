@@ -13,20 +13,24 @@
     <table class="table table-striped">
         <thead>
             <tr>
-            <th scope="col">#</th>
-            <th scope="col">Prenom</th>
+            <th scope="col"></th>
             <th scope="col">Nom</th>
-            <th scope="col">Note</th>
+            <th scope="col">Dernière modification</th>
+            <th scope="col">Type</th>
+            <th scope="col">Taille</th>
+            <th scope="col">Créateur</th>
             </tr>
         </thead>
 
         <tbody>
         {% for row in list %}
             <tr>
-                <th scope="row">{{loop.index}} </th>
-                <td>{{ row.prenom }}</td>
-                <td>{{row.nom}}</td>
-                <td>{{row.note}} </td>
+                <th scope="row"> </th>
+                <td>{{ row.name }}</td>
+                <td>{{ row.dateLastModification }}</td>
+                <td>{{ row.type.typeName }} </td>
+                <td>{{ row.size }} </td>
+                <td>{{ row.author.username }} </td>
             </tr>
         {% endfor %}
         </tbody>
