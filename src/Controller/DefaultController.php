@@ -44,8 +44,8 @@ class DefaultController extends AbstractController
         array_reverse($parents);
 
         // Fetch all files and directories
-        $folders = $this->getDoctrine()->getRepository('App:Folder')->findBy(array('parent'=> $root->getId()));
-        $files = $this->getDoctrine()->getRepository('App:File')->findBy(array('folder'=> $root->getId()));
+        $folders = $root->getChildrens();
+        $files = $root->getFiles();
 
         return $this->render('pages/home.html.twig',[
             'title' => 'Navigation',

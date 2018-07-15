@@ -33,10 +33,18 @@
         </thead>
 
         <tbody>
+        <tr>
+            <th scope="row"> </th>
+            <td><a href="{{ path('home') ~ '?folderID=' ~ root_folder.parent.id }}">../</a></td>
+            <td></td>
+            <td>folder</td>
+            <td></td>
+            <td></td>
+        </tr>
         {% for folder in listFolder if folder.getId != 1 %}
             <tr>
                 <th scope="row"> </th>
-                <td><a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a></td>
+                <td><a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}/</a></td>
                 <td></td>
                 <td>folder</td>
                 <td></td>
