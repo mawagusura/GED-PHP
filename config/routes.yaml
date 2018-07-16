@@ -29,3 +29,7 @@ home:
 stats:
     path: /GED/stats
     controller: App\Controller\DocController::stats
+
+delete_file:
+    path: /deleteFile
+    controller: App\Controller\DocController::deleteDocument

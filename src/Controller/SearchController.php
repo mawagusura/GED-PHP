@@ -26,7 +26,7 @@ class SearchController extends AbstractController
         $filtre=$req->request->get('filtre');
         $researchTag=preg_split("/[\s,]+/",$filtre);
         
-        $sql="select * from file left join user on user.id=file.author_id left join doc_type on doc_type.id=file.type_id where name LIKE :filtre0";
+        $sql="select * from file left join user on user.id=file.author_id left join doc_type on doc_type.id=file.type_id where folder_id <> 4 and name LIKE :filtre0";
         $params['filtre0']='%'.$researchTag[0].'%';
 
         for ($i = 1; $i <count($researchTag) ; $i++) {
