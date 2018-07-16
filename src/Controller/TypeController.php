@@ -20,7 +20,6 @@ class TypeController extends Controller
 {
 
     /**
-     * @Route("/type",name="create_type")
      * @param Request $request
      * @return Response
      */

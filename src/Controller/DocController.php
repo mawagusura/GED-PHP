@@ -16,12 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DocController extends Controller
 {
 
     /**
-     * @Route("/doc/details/{id}",name="doc_details")
      * @param int $id
      * @return Response
      */
@@ -31,8 +32,46 @@ class DocController extends Controller
         return $this->render('pages/doc-details.html.twig',array(
             'doc'=>$doc,
             'connected'=> true,
-            'title'=>"Document détails"
+            'title'=>"Document détails",
+            'blob' => base64_encode(stream_get_contents($doc->getData()))
         ));
+    }
+
+    /**
+     * @param int $id
+     * @return Response
+     */
+    public function showDocument(int $id):Response
+    {
+        $doc =$this->getDoctrine()->getRepository('App:File')->find($id);
+        if(!$doc){
+            throw new ResourceNotFoundException();
+        }
+        $file = $doc->getData();
+
+
+        $response = new StreamedResponse(function () use ($file) {
+            echo stream_get_contents($file);
+        });
+
+
+        switch ($doc->getType()->getExtension()) {
+            case 'png':
+                $response->headers->set('Content-Type', 'image/png');
+                $response->headers->set('Content-Disposition', 'inline;filename='.$doc->getName());
+                break;
+            case 'pdf':
+                $response->headers->set('Content-Type', 'application/pdf');
+                break;
+            case 'jpg':
+                $response->headers->set('Content-Type', 'image/jpg');
+                $response->headers->set('Content-Disposition', 'inline;filename='.$doc->getName());
+                break;
+            default:
+                break;
+        }
+
+        return $response;
     }
 
     /**
@@ -72,7 +111,6 @@ class DocController extends Controller
 
 
     /**
-     * @Route("/doc/create", name="doc_create")
      * @param Request $request
      * @return Response
      */
@@ -89,25 +127,34 @@ class DocController extends Controller
             // vérification du formulaire
             $file = $form['data']->getData();
             $extension = $file->guessExtension();
-            if (!$extension) {
+            $type = $this->getDoctrine()->getRepository('App:DocType')->findOneBy(array('extension' =>$extension));
+
+            if (!$extension || !$type) {
                 // extension cannot be guessed
-
                 // TODO Throw erreur
+                print("Type de fichier non reconnu non reconnu");
             }
-            else if($this->getDoctrine()->getRepository('App:DocType')->findOneBy($extension)==NULL){
-                // TODO throw erreur type non supporté
+            else {
+                // on récupère le user
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+                $user = $this->getUser();
+
+                $doc->setAuthor($user);
+                $doc->setFolder($root = $this->getDoctrine()->getRepository('App:Folder')->find(1));
+                $doc->setSize( $file->getSize());
+                $doc->setData(file_get_contents($file));
+                $doc->setType($type);
+
+                // Doctrine persist to base
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($doc);
+                $em->flush();
+
+                $this->redirectToRoute('home');
             }
-
-            // on récupère le user
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-            $user = $this->getUser();
-
-            $doc->setAuthor($user);
-
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($doc);
-            $em->flush();
+        }
+        else if($form->isSubmitted()){
+            print("error");
         }
 
         return $this->render('pages/form.html.twig',array(
@@ -116,7 +163,6 @@ class DocController extends Controller
     }
 
     /**
-     * @Route("/doc/delete/{id}",name="doc_delete")
      * @param int $id
      * @return Response
      */
@@ -153,7 +199,6 @@ class DocController extends Controller
 
 
     /**
-     * @Route("/folder/delete/{id}",name="folder_delete")
      * @param int $id
      * @return Response
      */

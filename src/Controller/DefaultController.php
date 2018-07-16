@@ -15,13 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends AbstractController
 {
 
-    public function index()
-    {
-        return $this->render('pages/index.html.twig', [
-        'title' => "Accueil GED"
-        ]);
-    }
-
     /**
      * @return Response
      */

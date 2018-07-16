@@ -1,7 +1,3 @@
-index:
-    path: /
-    controller: App\Controller\DefaultController::index
-
 security_login:
     path: /login
     controller: App\Controller\SecurityController::login
@@ -23,17 +19,39 @@ displayResearch:
     controller : App\Controller\SearchController::displayResearch
 
 home:
-    path: /GED/home
+    path: /home
     controller: App\Controller\DefaultController::home
 
 stats:
-    path: /GED/stats
+    path: /admin/stats
     controller: App\Controller\DocController::stats
 
 account:
-    path: /GED/account
+    path: /account
     controller: App\Controller\UserController::details
 
 delete_file:
     path: /deleteFile
     controller: App\Controller\DocController::deleteDocument
+
+doc_details:
+    path: /doc/details/{id}
+    controller: App\Controller\DocController::getDocumentDetails
+
+doc_show:
+    path: /doc/view/{id}
+    controller: App\Controller\DocController::showDocument
+
+doc_delete:
+    path: /doc/delete/id
+    controller: App\Controller\DocController::deleteDocument
+
+folder_delete:
+    path: /folder/delete/id
+    controller: App\Controller\DocController::deleteFolder
+
+create_type:
+    path: /type
+    controller: App\Controller\TypeController::createType
+
+
