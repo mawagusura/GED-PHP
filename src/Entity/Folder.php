@@ -131,4 +131,23 @@ class Folder
     {
         return $this->parent;
     }
+
+    /**
+     * @return array
+     * Return an array with all the parents
+     */
+    public function getAllParents() : array
+    {
+        // Fetch the list of the parents
+        $parents = array();
+        $folder = $this;
+        while($folder->getId() != 1) {
+            $parents[] = $folder;
+            $folder = $folder->getParent();
+        }
+        // Put them in the good order (by deepness)
+        $parents = array_reverse($parents);
+
+        return $parents;
+    }
 }

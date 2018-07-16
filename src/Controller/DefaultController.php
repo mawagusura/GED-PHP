@@ -34,14 +34,7 @@ class DefaultController extends AbstractController
         $root = $this->getDoctrine()->getRepository('App:Folder')->find($rootID);
 
         // Fetch the list of the parents
-        $parents = array();
-        $parent = $root;
-        while($parent->getId() != 1) {
-            $parents[] = $parent;
-            $parent = $root->getParent();
-        }
-        // Put them in the good order (by deepness)
-        array_reverse($parents);
+        $parents = $root->getAllParents();
 
         // Fetch all files and directories
         $folders = $root->getChildrens();

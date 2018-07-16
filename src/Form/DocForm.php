@@ -8,34 +8,32 @@
 
 namespace App\Form;
 
-use App\Entity\Doc;
+use App\Entity\File;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 
 class DocForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('doc_name',TextType::class)
+            ->add('name',TextType::class)
             ->add('description',TextType::class)
-            ->add('doc_tags', TextType::class)
-            ->add('doc_doc_type_id',ChoiceType::class,array(
-                'types' => array(
-
-                )
-            ))
-            ->add('doc_data', FileType::class)
+            ->add('tags', TextType::class)
+            ->add('type',TextType::class)
+            ->add('data', FileType::class)
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Doc::class,
+            'data_class' => File::class,
         ));
     }
 }

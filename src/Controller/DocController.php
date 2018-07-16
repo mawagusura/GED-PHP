@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class DocController extends Controller
 {
@@ -65,6 +66,7 @@ class DocController extends Controller
 
 
     /**
+     * @Route("/doc/create", name="doc_create")
      * @param Request $request
      * @return Response
      */
@@ -74,14 +76,33 @@ class DocController extends Controller
         $form = $this->createForm(DocForm::class,$doc);
 
         $form->handleRequest($request);
+
+        // Si le formulaire est envoyé
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // vérification du formulaire
+            $file = $form['data']->getData();
+            $extension = $file->guessExtension();
+            if (!$extension) {
+                // extension cannot be guessed
+                $extension = 'bin';
+            }
+
+            // on récupère le user
+            $securityContext = $this->container->get('security.authorization_checker');
+            if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+                $user = $this->get('security.context')->getToken()->getUser();
+                $doc->setAuthor($user);
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($doc);
             $em->flush();
         }
 
-        return $this->render('doc_details');
+        return $this->render('pages/form.html.twig',array(
+            'form' => $form->createView()
+        ));
     }
 
     /**

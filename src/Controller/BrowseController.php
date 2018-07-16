@@ -19,7 +19,7 @@ class BrowseController extends AbstractController
 {
 
     /**
-     * @param DossierRepository $dossierRepository
+     * @param FolderRepository $folderRepository
      * @Route(path="/browse", name="browse")
      */
     public function browse(FolderRepository $folderRepository){
