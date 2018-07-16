@@ -1,4 +1,25 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+<form name="user" method="post" class="form-horizontal text-center">
+
+    <div class="form-group">
+        <label for="user_user_first_name" class="required control-label col-sm-2">User first name</label>
+        <input id="user_user_first_name"  name="user[user_first_name]" required="required" value="{{ user.getUserFirstName }}" type="text">
+    </div>
+    <div class="form-group">
+        <label for="user_user_last_name" class="required control-label col-sm-2">User last name</label>
+        <input id="user_user_last_name" name="user[user_last_name]" required="required" value="{{ user.getUserLastName }}" type="text">
+    </div>
+    <div class="form-group">
+        <label for="user_username" class="required control-label col-sm-2">Username</label>
+        <input id="user_username" name="user[username]" required="required" value="{{ user.getUsername }}" type="text">
+    </div>
+    <div class="form-group">
+        <label for="user_password_first" class="required control-label col-sm-2">Password</label>
+        <input id="user_password_first" name="user[password][first]" required="required" type="password">
+    </div>
+    <div class="form-group">
+        <label for="user_password_second" class="required control-label col-sm-2">Repeat Password</label>
+        <input id="user_password_second" name="user[password][second]" required="required" type="password">
+    </div>
+
     <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+</form>
