@@ -10,7 +10,9 @@ namespace App\Controller;
 
 
 use App\Entity\File;
+use App\Entity\Folder;
 use App\Form\DocForm;
+use App\Form\FolderForm;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,11 +51,9 @@ class DocController extends Controller
         }
         $file = $doc->getData();
 
-
         $response = new StreamedResponse(function () use ($file) {
             echo stream_get_contents($file);
         });
-
 
         switch ($doc->getType()->getExtension()) {
             case 'png':
@@ -111,7 +111,6 @@ class DocController extends Controller
 
 
     /**
-     * @Route("/doc/create", name="doc_create")
      * @param Request $request
      * @return Response
      */
@@ -121,6 +120,11 @@ class DocController extends Controller
         $form = $this->createForm(DocForm::class,$doc);
 
         $form->handleRequest($request);
+
+        $rootID = $request->query->get('folderID');
+        if($rootID == NULL) {
+            $rootID = 1;
+        }
 
         // Si le formulaire est envoyé
         if ($form->isSubmitted() && $form->isValid()) {
@@ -141,25 +145,23 @@ class DocController extends Controller
                 $user = $this->getUser();
 
                 $doc->setAuthor($user);
-                $doc->setFolder($root = $this->getDoctrine()->getRepository('App:Folder')->find(1));
+                $doc->setFolder( $this->getDoctrine()->getRepository('App:Folder')->find($rootID));
                 $doc->setSize( $file->getSize());
                 $doc->setData(file_get_contents($file));
                 $doc->setType($type);
+                $doc->setName($file->getClientOriginalName());
 
                 // Doctrine persist to base
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($doc);
                 $em->flush();
-
-                $this->redirectToRoute('home');
             }
         }
         else if($form->isSubmitted()){
-            print("error");
+            throw new \InvalidArgumentException($form->getErrors());
         }
-
-        return $this->render('pages/form.html.twig',array(
-            'form' => $form->createView()
+        return $this->redirectToRoute('home', array(
+            'folderID' => $rootID
         ));
     }
 
@@ -176,26 +178,7 @@ class DocController extends Controller
         $em->persist($doc);
         $em->flush();
 
-        
-        $rootID = 1;
-        
-        $root = $this->getDoctrine()->getRepository('App:Folder')->find($rootID);
-
-        // Fetch the list of the parents
-        $parents = $root->getAllParents();
-
-        // Fetch all files and directories
-        $folders = $root->getChildrens();
-        $files = $root->getFiles();
-
-        return $this->render('pages/home.html.twig',[
-            'title' => 'Navigation',
-            'connected' => true,
-            'root_folder' => $root,
-            'parents' => $parents,
-            'listFolder'=> $folders,
-            'listFile' => $files
-        ]);
+        return $this->redirectToRoute('home');
     }
 
 
@@ -212,26 +195,46 @@ class DocController extends Controller
         $em->persist($folder);
         $em->flush();
 
-        
-        $rootID = 1;
-        
-        $root = $this->getDoctrine()->getRepository('App:Folder')->find($rootID);
-
-        // Fetch the list of the parents
-        $parents = $root->getAllParents();
-
-        // Fetch all files and directories
-        $folders = $root->getChildrens();
-        $files = $root->getFiles();
-
-        return $this->render('pages/home.html.twig',[
-            'title' => 'Navigation',
-            'connected' => true,
-            'root_folder' => $root,
-            'parents' => $parents,
-            'listFolder'=> $folders,
-            'listFile' => $files
-        ]);
+        return $this->redirectToRoute('home');
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function createFolder(Request $request) :Response
+    {
+        $folder = new Folder();
+        $form = $this->createForm(FolderForm::class, $folder);
+
+        $form->handleRequest($request);
+
+        $rootID = $request->query->get('folderID');
+        if($rootID == NULL) {
+            $rootID = 1;
+        }
+
+        // Si le formulaire est envoyé
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $folder->setName($form->getData()->getName());
+
+
+            $parent = $this->getDoctrine()->getRepository('App:Folder')->find($rootID);
+            $folder->setParent($parent);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($folder);
+            $em->flush();
+
+        }
+        else if($form->isSubmitted()){
+            throw new \InvalidArgumentException($form->getErrors());
+        }
+
+        return $this->redirectToRoute('home', array(
+            'folderID' => $rootID
+        ));
+
+    }
 }

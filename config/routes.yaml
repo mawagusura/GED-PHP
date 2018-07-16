@@ -43,15 +43,23 @@ doc_show:
     controller: App\Controller\DocController::showDocument
 
 doc_delete:
-    path: /doc/delete/id
+    path: /doc/delete/{id}
     controller: App\Controller\DocController::deleteDocument
 
 folder_delete:
-    path: /folder/delete/id
+    path: /folder/delete/{id}
     controller: App\Controller\DocController::deleteFolder
 
 create_type:
     path: /type
     controller: App\Controller\TypeController::createType
+
+doc_create:
+    path: /doc/create
+    controller: App\Controller\DocController::createDocument
+
+folder_create:
+    path: /folder/create
+    controller: App\Controller\DocController::createFolder
 
 

@@ -34,10 +34,8 @@
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 			      </div>
-                    <form action="">
+                    <form action="{{ path('doc_create', {'folderID' : root_folder.getId}) }}" method="post" enctype="multipart/form-data">
                       <div class="modal-body">
-                        <!-- Nom, tags, Description,importer fichier -->
-
 
                         <!-- TAGS -->
                           <div class="form-group">
@@ -48,7 +46,7 @@
                         <!-- Description -->
                           <div class="form-group">
                               <label for="doc_form_description" class="required">Description</label>
-                              <textarea id="doc_form_description" name="doc_form[description]" required="required" type="text" class="form-control">Description du fichier</textarea>
+                              <input id="doc_form_description" name="doc_form[description]" required="required" type="text" class="form-control">
                           </div>
 
                         <!-- import -->
@@ -56,11 +54,11 @@
                               <label for="doc_form_data" class="required">Fichier</label>
                               <input id="doc_form_data" name="doc_form[data]" required="required" type="file" class="form-control-file" aria-describedby="fileHelp">
                           </div>
-                          <input id="doc_form__token" name="doc_form[_token]" value="egZKWI4oQuZnLUUn-bJDlK7g7b7glijkRky8Bhdyg2s" type="hidden">
+                          <input id="doc_form_token" name="doc_form[_token]" value="{{ csrf_token('file') }}" type="hidden">
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-primary" type="submit">Ajouter</button>
+                        <button class="btn btn-primary" type="submit">Ajouter</button>
                       </div>
                     </form>
 			    </div>
@@ -82,17 +80,19 @@
 			        </button>
 			      </div>
 
-                    <form action="">
+                    <form action="{{ path('folder_create', {'folderID' : root_folder.getId}) }}" method="post">
                       <div class="modal-body">
                         <!-- Nom -->
                         <div class="form-group">
-                          <label class="col-form-label" for="inputDefault">Nom</label>
-                          <input class="form-control" placeholder="Nom du dossier" id="inputDefault" type="text">
+                          <label class="col-form-label required" for="folder_form_name">Nom du dossier</label>
+                          <input class="form-control" placeholder="Nom du dossier" id="folder_form_name" name="folder_form[name]" required="required" type="text">
                         </div>
+
                       </div>
+                        <input id="folder_form_token" name="folder_form[_token]" value="{{ csrf_token('folder') }}" type="hidden">
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-primary">Ajouter</button>
+                        <button class="btn btn-primary" type="submit">Ajouter</button>
                       </div>
                     </form>
 			    </div>
