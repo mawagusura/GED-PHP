@@ -150,7 +150,7 @@
 								}}</span></td>
 						<td>{{ file.dateCreation|date('d/m/Y')}}</td>
 						<td>{{ file.type.typeName }}</td>
-						<td>{{ file.size }}</td>
+						<td>{{ file.size }} octets</td>
 						<td>{{ file.author.username }}</td>
 						<td><a href="{{path('doc_delete',  {'id' : file.id}) }}">
 								<button class="btn btn-muted">
