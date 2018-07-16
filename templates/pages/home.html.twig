@@ -32,33 +32,35 @@
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 			      </div>
-			      <div class="modal-body">
-			        <!-- Nom, tags, Description,importer fichier -->
+                    <form action="">
+                      <div class="modal-body">
+                        <!-- Nom, tags, Description,importer fichier -->
 
-					        
-			        <!-- TAGS -->
-			        <div class="form-group">
-					  <label class="col-form-label" for="inputDefault">Tags</label>
-					  <input class="form-control" placeholder="Tag, Tag, Tag, Tag ..." id="inputDefault" type="text">
-					</div>
-			        
-			        <!-- Description -->
-			        <div class="form-group">
-				      <label for="exampleTextarea">Description</label>
-				      <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-			   		</div>
-			        
-			        <!-- import -->
-			        <div class="form-group">
-				      <label for="exampleInputFile">Fichier</label>
-				      <input class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" type="file">
-			    	</div>
-			    
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-			        <button type="button" class="btn btn-primary">Ajouter</button>
-			      </div>
+
+                        <!-- TAGS -->
+                          <div class="form-group">
+                              <label for="doc_form_tags" class="required col-form-label">Tags</label>
+                              <input id="doc_form_tags" name="doc_form[tags]" required="required" type="text" placeholder="Tag, Tag, Tag, Tag ..." class="form-control">
+                          </div>
+
+                        <!-- Description -->
+                          <div class="form-group">
+                              <label for="doc_form_description" class="required">Description</label>
+                              <textarea id="doc_form_description" name="doc_form[description]" required="required" type="text" class="form-control">Description du fichier</textarea>
+                          </div>
+
+                        <!-- import -->
+                          <div class="form-group">
+                              <label for="doc_form_data" class="required">Fichier</label>
+                              <input id="doc_form_data" name="doc_form[data]" required="required" type="file" class="form-control-file" aria-describedby="fileHelp">
+                          </div>
+                          <input id="doc_form__token" name="doc_form[_token]" value="egZKWI4oQuZnLUUn-bJDlK7g7b7glijkRky8Bhdyg2s" type="hidden">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <button type="button" class="btn btn-primary" type="submit">Ajouter</button>
+                      </div>
+                    </form>
 			    </div>
 			  </div>
 			</div>
@@ -77,17 +79,20 @@
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 			      </div>
-			      <div class="modal-body">
-			        <!-- Nom -->
-			        <div class="form-group">
-					  <label class="col-form-label" for="inputDefault">Nom</label>
-					  <input class="form-control" placeholder="Nom du dossier" id="inputDefault" type="text">
-					</div>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-			        <button type="button" class="btn btn-primary">Ajouter</button>
-			      </div>
+
+                    <form action="">
+                      <div class="modal-body">
+                        <!-- Nom -->
+                        <div class="form-group">
+                          <label class="col-form-label" for="inputDefault">Nom</label>
+                          <input class="form-control" placeholder="Nom du dossier" id="inputDefault" type="text">
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <button type="button" class="btn btn-primary">Ajouter</button>
+                      </div>
+                    </form>
 			    </div>
 			  </div>
 			</div>

@@ -20,7 +20,11 @@ class UserController extends Controller
      */
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render('user/index.html.twig', ['users' => $userRepository->findAll()]);
+        return $this->render('user/index.html.twig', [
+            'users' => $userRepository->findAll(),
+            'title'=>"Gestion Utilisateur",
+            'connected'=>true
+        ]);
     }
 
     /**
@@ -43,6 +47,8 @@ class UserController extends Controller
         return $this->render('user/new.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'title'=>"Création Utilisateur",
+            'connected'=>true
         ]);
     }
 
@@ -51,7 +57,11 @@ class UserController extends Controller
      */
     public function show(User $user): Response
     {
-        return $this->render('user/show.html.twig', ['user' => $user]);
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
+            'title'=>"Visualisation Utilisateur",
+            'connected'=>true
+        ]);
     }
 
     /**
@@ -71,6 +81,8 @@ class UserController extends Controller
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'title'=>"Edition Utilisateur",
+            'connected'=>true
         ]);
     }
 

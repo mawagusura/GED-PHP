@@ -111,6 +111,7 @@ class DocController extends Controller
 
 
     /**
+     * @Route("/doc/create", name="doc_create")
      * @param Request $request
      * @return Response
      */
