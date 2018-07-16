@@ -26,14 +26,14 @@ class DocType implements \Serializable{
     private $type_name;
 
     /**
-     * @@ORM\Column(type="string", length=20)
-     */
-    private $extension;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\File", mappedBy="type")
      */
     private $files;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $extension;
 
     public function __construct()
     {
@@ -61,19 +61,7 @@ class DocType implements \Serializable{
     {
         $this->type_name=$typeName;
     }
-
-    /**
-     * @return String
-     */
-    public function getExtension() :string
-    {
-        return $this->extension;
-    }
-
-    public function setExtension(string $extension) :self
-    {
-        $this->extension = $extension;
-    }
+    
 
     /**
      * String representation of object
@@ -127,6 +115,18 @@ class DocType implements \Serializable{
                 $file->setType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getExtension(): ?string
+    {
+        return $this->extension;
+    }
+
+    public function setExtension(string $extension): self
+    {
+        $this->extension = $extension;
 
         return $this;
     }

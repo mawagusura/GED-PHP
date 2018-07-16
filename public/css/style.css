@@ -7,3 +7,6 @@
     padding-bottom: 40px;
     margin-top: 70px;
 }
+button.btn.btn-primary.float-right {
+	margin: 0px 10px 10px 10px;
+}
