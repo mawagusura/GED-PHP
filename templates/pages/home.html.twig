@@ -4,7 +4,7 @@
 
     <nav aria-label="breadcrumb"> 
         <ol class="breadcrumb path-banner">
-        <div class="d-flex align-items-center" style="width:80%">
+        <div class="d-flex align-items-center" style="width:70%">
             <li class="breadcrumb-item" aria-current="page"><a href="{{ path('home') ~ '?folderID=1'}}">Racine</a></li>
             {% for folder in parents %}
                 {% if folder.getId == root_folder.getId %}
@@ -33,12 +33,7 @@
 			      </div>
 			      <div class="modal-body">
 			        <!-- Nom, tags, Description,importer fichier -->
-			        
-			        <!-- Nom -->
-			        <div class="form-group">
-					  <label class="col-form-label" for="inputDefault">Titre</label>
-					  <input class="form-control" placeholder="Nom du fichier" id="inputDefault" type="text">
-					</div>
+
 					        
 			        <!-- TAGS -->
 			        <div class="form-group">
