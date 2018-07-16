@@ -93,17 +93,14 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/details/{user_id}", name="user_details")
-     * @param int $id
      * @return Response
      */
-    public function getUserDetails(int $id): Response
+    public function details(): Response
     {
-        $user = $this->getDoctrine()->getRepository('App:User')->find($id);
         return $this->render("pages/user-details.html.twig",array(
             'title'=>"Détails d'utilisateur",
             'connected'=>true,
-            'user'=>$user,
+            'user'=>$this->getUser()
         ));
     }
 }

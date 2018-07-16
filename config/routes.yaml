@@ -30,6 +30,10 @@ stats:
     path: /GED/stats
     controller: App\Controller\DocController::stats
 
+account:
+    path: /GED/account
+    controller: App\Controller\UserController::details
+
 delete_file:
     path: /deleteFile
     controller: App\Controller\DocController::deleteDocument
