@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\User1Type;
+use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,8 +67,9 @@ class UserController extends Controller
     /**
      * @Route("/{user_id}/edit", name="user_edit", methods="GET|POST")
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request,int $user_id): Response
     {
+        $user = $this->getDoctrine()->getRepository('App:User')->find($user_id);
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
