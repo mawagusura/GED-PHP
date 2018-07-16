@@ -81,10 +81,24 @@ class UserController extends Controller
     {
         if ($this->isCsrfTokenValid('delete'.$user->getUser_id(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($user);
+            $user->setUserDeleted(true);
+            $em->persist($user);
             $em->flush();
         }
 
         return $this->redirectToRoute('user_index');
+    }
+
+    /**
+     * @Route("/{user_id}", name="user_delete", methods="DELETE")
+     * @param Request $request
+     * @param User $user
+     * @return Response
+     */
+    public function getUser(Request $request, User $user): Response
+    {
+        return $this->render("pages/XXX.html.twig",array(
+
+        ));
     }
 }

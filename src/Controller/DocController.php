@@ -106,6 +106,7 @@ class DocController extends Controller
     }
 
     /**
+     * @Route("/doc/delete/{id}",name="doc_delete")
      * @param int $id
      * @return Response
      */
@@ -117,6 +118,23 @@ class DocController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($doc);
         $em->flush();
-        return $this->render('pages/home.html.twig');
+        return $this->redirect('pages/home.html.twig');
+    }
+
+
+    /**
+     * @Route("/folder/delete/{id}",name="folder_delete")
+     * @param int $id
+     * @return Response
+     */
+    public function deleteFolder(int $id): Response
+    {
+        $folder= $this->getDoctrine()->getRepository('App:Folder')->find($id);
+        $folderCorb=$this->getDoctrine()->getRepository('App:Folder')->find(4);
+        $folder->setParent($folderCorb);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($folder);
+        $em->flush();
+        return $this->redirect('pages/home.html.twig');
     }
 }
