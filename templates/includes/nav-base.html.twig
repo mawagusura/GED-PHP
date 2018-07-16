@@ -6,7 +6,6 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         {% if connected %}
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
@@ -14,10 +13,15 @@
                     <input class="form-control mr-sm-2" placeholder="Rechercher un fichier" type="text" name="filtre">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">Rechercher</button>
                 </form>
+                
             </ul>
 
             <ul class="navbar-nav">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="/admin/stats"><button class="btn btn-secondary my-2 my-sm-0">Statistiques</button></a>
+                        {% endif %}
                 <li class="nav-item dropdown">
+
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-user-circle" aria-hidden="true"></i>
                         {{ app.user.username }}
