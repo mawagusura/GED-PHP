@@ -1,9 +1,14 @@
-<!DOCTYPE html>
-
-<title>User index</title>
+{% extends 'includes/base-template.html.twig' %}
 
 {% block body %}
-    <h1>User index</h1>
+<div class="d-flex">
+	<div class="mr-auto p-2">
+    	<h1>User index</h1>
+    </div>
+    <div class="p-2">
+    	<button type="button" class="btn btn-secondary" href="{{ path('user_new') }}">Ajouter un utilisateur</button>
+    </div>
+</div>
 
     <table class="table">
         <thead>
@@ -24,16 +29,18 @@
                 <td>{{ user.getId }}</td>
                 <td>{{ user.username }}</td>
                 <td>{{ user.password }}</td>
-                <td>{{ user.userFirstName }}</td>
                 <td>{{ user.userLastName }}</td>
+                <td>{{ user.userFirstName }}</td>
+                <td>
                 {% for role in user.roles %}
-                    <td>{{ role }}</td>
+                    {{ role }},
                 {%  endfor %}
+                </td>
 
                 <td>{{ user.userDeleted ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('user_show', {'user_id': user.getId}) }}">show</a>
-                    <a href="{{ path('user_edit', {'user_id': user.getId}) }}">edit</a>
+                    <a href="{{ path('user_show', {'user_id': user.getId}) }}"><i class="fas fa-eye btn btn-secondary" style="color:">  </i></a>
+                    <a href="{{ path('user_edit', {'user_id': user.getId}) }}"><i class="fas fa-pen btn btn-secondary"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -44,5 +51,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('user_new') }}">Create new</a>
+    
 {% endblock %}
