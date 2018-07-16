@@ -1,0 +1,15 @@
+{% extends 'includes/base-template.html.twig' %}
+
+{% block body %}
+
+    <div>
+        <label>Username</label>:&nbsp;<label>{{ user.name }}</label>
+    </div>
+    <div>
+        <label>Prénom</label>:&nbsp;<label>{{ user.userFirstName}}</label>
+    </div>
+    <div>
+        <label>Nom</label>:&nbsp;<label>{{ user.userLastName}}</label>
+    </div>
+
+{% endblock %}

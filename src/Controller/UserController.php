@@ -73,7 +73,7 @@ class UserController extends Controller
             'form' => $form->createView(),
         ]);
     }
-    
+
     /**
      * @Route("/user/{user_id}", name="user_delete", methods="DELETE")
      * @param Request $request
@@ -100,7 +100,7 @@ class UserController extends Controller
     public function getUserDetails(int $id): Response
     {
         $user = $this->getDoctrine()->getRepository('App:User')->find($id);
-        return $this->render("pages/user_details.html.twig",array(
+        return $this->render("pages/user-details.html.twig",array(
             'title'=>"Détails d'utilisateur",
             'connected'=>true,
             'user'=>$user,
