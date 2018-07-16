@@ -1,43 +1,34 @@
-{% extends 'includes/base-template.html.twig' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://bootswatch.com/4/flatly/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+<body>
 
-{% block body %}
+<div class="body docdetails">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <span class="navbar-brand" href="#">{{ doc.name }}</span>
 
-    <div>
-        <label>Nom</label>:&nbsp;<label>{{ doc.name }}</label>
-    </div>
-    <div>
-        <label>Auteur</label>:&nbsp;<label>{{ doc.author.username }}</label>
-    </div>
-    <div>
-        <label>Description</label>:&nbsp;<label>{{ doc.description}}</label>
-    </div>
-    <div>
-        <label>Type</label>:&nbsp;<label>{{ doc.type.typeName }}</label>
-    </div>
-    <div>
-        <label>Date de création</label>:&nbsp;<label>{{ doc.dateCreation|date('d-m-y')}}</label>
-    </div>
-    <div>
-        <label>Taille</label>:&nbsp;<label>{{ doc.size }}</label>
-    </div>
-    <div>
-        <label>Dernière modification le</label>:&nbsp;<label>{{ doc.dateLastModification|date('d-m-y')}}</label>
-    </div>
-    <div>
-        <label>Tags</label>:&nbsp;<label>{{ doc.tags }}</label>
-    </div>
-    <div>
-        <button onClick='printJS("{{ doc.data }}","{{ doc.type.typeName }}");'>
-            Imprimer le fichier
+        <button onClick='printJS("{{ doc.data }}","{{ doc.type.typeName }}");' class="btn btn-secondary float-right">
+            <i class="fa fa-print" aria-hidden="true"></i>
         </button>
+    </nav>
+    <div class="ml-2 doc-infos">
+        <p><b>Auteur :</b> {{ doc.author.username }}<br/>
+            <b>Description :</b> {{ doc.description}}<br/>
+            <b>Type :</b> {{ doc.type.typeName }}<br/>
+            <b>Date de création :</b> {{ doc.dateCreation|date('d/m/Y')}}<br/>
+            <b>Dernière modification le :</b> {{ doc.dateLastModification|date('d/m/Y')}}<br/>
+            <b>Taille :</b> {{ doc.size }}<br/>
+            <b>Tags :</b> {{ doc.tags }}</p>
+
     </div>
 
-    {% block javascripts %}
-        <script src="{{ asset('js/print-js/dist/print.js') }}"></script>
-    {% endblock %}
+    <script src="{{ asset('js/print-js/dist/print.js') }}"></script>
 
-    {% block stylesheets %}
         <link rel="{{ asset('js/print-js/dist/print.min.css') }}">
-    {%  endblock %}
+</div>
 
-{% endblock %}
+</body>
+</html>

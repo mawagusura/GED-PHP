@@ -2,72 +2,97 @@
 
 {% block body %}
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item" aria-current="page"><a href="{{ path('home') ~ '?folderID=1'}}">Racine</a></li>
-        {% for folder in parents %}
-            {% if folder.getId == root_folder.getId %}
-                <li class="breadcrumb-item active" aria-current="page">
-                    <a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a>
-                </li>
-            {% else %}
-                <li class="breadcrumb-item" aria-current="page">
-                    <a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a>
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ol>
-</nav>
-<button type="button" class="btn btn-primary float-right">Ajouter un Fichier</button>
-<div>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-            <th scope="col"></th>
-            <th scope="col">Nom</th>
-            <th scope="col">Dernière modification</th>
-            <th scope="col">Type</th>
-            <th scope="col">Taille</th>
-            <th scope="col">Créateur</th>
-            <th scope="col">Supprimer</th>
-            </tr>
-        </thead>
+    <nav aria-label="breadcrumb">
+        <div class="files-actions-buttons float-right">
+            <button type="button" class="btn btn-primary add-file-btn">Ajouter un Fichier</button>
+        </div>
+        <ol class="breadcrumb path-banner">
+            <li class="breadcrumb-item" aria-current="page"><a href="{{ path('home') ~ '?folderID=1'}}">Racine</a></li>
+            {% for folder in parents %}
+                {% if folder.getId == root_folder.getId %}
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a>
+                    </li>
+                {% else %}
+                    <li class="breadcrumb-item" aria-current="page">
+                        <a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
 
-        <tbody>
-        <tr>
-            <th scope="row"> </th>
-            <td><a href="{{ path('home') ~ '?folderID=' ~ root_folder.parent.id }}">../</a></td>
-            <td></td>
-            <td>folder</td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        {% for folder in listFolder if folder.getId != 1 %}
-            <tr>
-                <th scope="row"> </th>
-                <td><a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}/</a></td>
-                <td></td>
-                <td>folder</td>
-                <td></td>
-                <td></td>
-                <td><a href="{{path('folder_delete',  {'id' : folder.id}) }}"><img src="{{ asset('images/th.jpg') }}" width="30" height="30" alt=""></a></td>
-            </tr>
-        {% endfor %}
-        {% for file in listFile %}
-            <tr>
-                <th scope="row"> </th>
-                <td><a href="{{ path('doc_details',  {'id' : file.id}) }}">{{ file.name }}</a></td>
-                <td>{{ file.dateLastModification }}</td>
-                <td>{{ file.type.typeName }} </td>
-                <td>{{ file.size }} </td>
-                <td>{{ file.author.username }} </td>
-                <td><a href="{{path('doc_delete',  {'id' : file.id}) }}"><img src="{{ asset('images/th.jpg') }}" width="30" height="30" alt=""></a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+        </ol>
 
+    </nav>
 
+    <div class="row">
+        <div class="col-md-8 no-margin">
+            <div class="files-tab ml-1">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Dernière modification</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Taille</th>
+                        <th scope="col">Créateur</th>
+                        <th scope="col">Supprimer</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <th scope="row"> </th>
+                        <td><a href="{{ path('home') ~ '?folderID=' ~ root_folder.parent.id }}">../</a></td>
+                        <td></td>
+                        <td>folder</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% for folder in listFolder if folder.getId != 1 %}
+                        <tr>
+                            <th scope="row"> </th>
+                            <td><a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}/</a></td>
+                            <td></td>
+                            <td>folder</td>
+                            <td></td>
+                            <td></td>
+                            <td><a href="{{path('folder_delete',  {'id' : folder.id}) }}"><button class="btn btn-muted"><i class="fa fa-trash" aria-hidden="true"></i></button></a></td>
+                        </tr>
+                    {% endfor %}
+                    {% for file in listFile %}
+                        <tr>
+                            <th scope="row"> </th>
+                            <td><span class="file-clickable" value="{{ path('doc_details',  {'id' : file.id}) }}">{{ file.name }}</span></td>
+                            <td>{{ file.dateLastModification }}</td>
+                            <td>{{ file.type.typeName }} </td>
+                            <td>{{ file.size }} </td>
+                            <td>{{ file.author.username }} </td>
+                            <td><a href="{{path('doc_delete',  {'id' : file.id}) }}">
+                                    <button class="btn btn-muted"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                </a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-4 docdetails-panel">
+            <iframe src=""
+                    class="iframe-docdetails"
+                    seamless>
+            </iframe>
+        </div>
+    </div>
+
+    {% block javascripts %}
+        <script src="{{ asset('js/print-js/dist/print.js') }}"></script>
+        <script>
+            $(".file-clickable").click( function() {
+                $(".iframe-docdetails").attr("src", this.getAttribute("value"));
+            })
+        </script>
+    {% endblock %}
 {% endblock %}

@@ -1,12 +1,68 @@
-/*
- * Forms
- */
+body {
+    overflow-x:hidden;
+}
 
 .form {
     padding-top: 40px;
     padding-bottom: 40px;
     margin-top: 70px;
 }
-button.btn.btn-primary.float-right {
-	margin: 0px 10px 10px 10px;
+
+.add-file-btn {
+    height: 30px;
+    font-size: 80%;
+}
+
+.path-banner {
+    display:flex;
+    list-style:none;
+}
+
+.files-actions-buttons {
+    background-color: #ecf0f1;
+    padding: 0.55em 0.55em;
+}
+
+.files-actions-buttons button {
+}
+
+.path {
+    display: inline;
+}
+
+.iframe-docdetails {
+    margin: 0;
+}
+
+.files-tab {
+    border: solid darkgrey 1px;
+    border-radius: 5px;
+    padding: 0;
+}
+
+.file-clickable:hover {
+    cursor: pointer;
+}
+
+.docdetails-panel {
+    padding: 0;
+    padding-right: 10px;
+}
+
+.docdetails-panel iframe {
+    border: solid darkgrey 1px;
+    border-radius: 5px;
+    padding: 0;
+    height: 100%;
+    width: 96%;
+    margin: 0;
+}
+
+.docdetails .doc-infos p{
+    margin: 0;
+}
+
+.doc-name {
+    height: 20px;
+    color: white;
 }
