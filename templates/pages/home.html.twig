@@ -3,22 +3,23 @@
 {% block body %}
 
     <nav aria-label="breadcrumb"> 
-        <ol class="breadcrumb path-banner">
-        <div class="d-flex align-items-center" style="width:70%">
-            <li class="breadcrumb-item" aria-current="page"><a href="{{ path('home') ~ '?folderID=1'}}">Racine</a></li>
-            {% for folder in parents %}
-                {% if folder.getId == root_folder.getId %}
-                    <li class="breadcrumb-item active" aria-current="page">
-                        <a class="align-self-center" href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a>
-                    </li>
-                {% else %}
-                    <li class="breadcrumb-item" aria-current="page">
-                        <a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a>
-                    </li>
-                {% endif %}
-            {% endfor %}
-            </div>
-            
+        <ol class="breadcrumb path-banner row">
+        <div class="d-flex align-items-center col-md-8">
+                <li class="breadcrumb-item" aria-current="page"><a href="{{ path('home') ~ '?folderID=1'}}">Racine</a></li>
+                {% for folder in parents %}
+                    {% if folder.getId == root_folder.getId %}
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <a class="align-self-center" href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a>
+                        </li>
+                    {% else %}
+                        <li class="breadcrumb-item" aria-current="page">
+                            <a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+        </div>
+        <div class="buttons-files col-md-4">
+
             <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#ajoutFichier">Ajouter un Fichier</button>
 
 			<!-- Modal -->
@@ -62,7 +63,7 @@
 			  </div>
 			</div>
 	
-			<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#ajoutDossier" style="text-align: right;">
+			<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#ajoutDossier">
 			  Ajouter un Dossier
 			</button>
 			
@@ -90,7 +91,7 @@
 			    </div>
 			  </div>
 			</div>
-
+        </div>
         </ol>
 
     </nav>
