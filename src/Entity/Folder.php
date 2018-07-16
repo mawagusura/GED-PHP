@@ -132,6 +132,10 @@ class Folder
         return $this->parent;
     }
 
+    public function setParent(Folder $par){
+        $this->parent=$par;
+    }
+
     /**
      * @return array
      * Return an array with all the parents
