@@ -26,7 +26,7 @@ class SearchController extends AbstractController
         $filtre=$req->request->get('filtre');
         $researchTag=preg_split("/[\s,]+/",$filtre);
         
-        $sql="select * from file where name LIKE :filtre0";
+        $sql="select * from file left join user on user.id=file.author_id left join doc_type on doc_type.id=file.type_id where name LIKE :filtre0";
         $params['filtre0']='%'.$researchTag[0].'%';
 
         for ($i = 1; $i <count($researchTag) ; $i++) {
@@ -34,7 +34,6 @@ class SearchController extends AbstractController
             $params['filtre'.$i]='%'.$researchTag[$i].'%';
             $sql=$sql." OR name LIKE :filtre".$i;
         }
-        print_r($params);
         
         for($i = 0; $i <count($researchTag) ; $i++){
             $sql=$sql." OR tags LIKE :filtre".$i;
@@ -47,12 +46,12 @@ class SearchController extends AbstractController
         $stmt->execute($params);
         $result=$stmt->fetchAll();
 
-        print_r($result);
 
         return $this->render('pages/search.html.twig',[
             'title' => "Recherche d'un fichier",
             'connected' => true,
-            'fichiers' => 'recherche en cours'
+            'listFile' => $result,
+            'listFolder' => array()
             ]);
     }
 
