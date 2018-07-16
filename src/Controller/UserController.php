@@ -73,18 +73,37 @@ class UserController extends Controller
             'form' => $form->createView(),
         ]);
     }
-
+    
     /**
-     * @Route("/{user_id}", name="user_delete", methods="DELETE")
+     * @Route("/user/{user_id}", name="user_delete", methods="DELETE")
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function delete(Request $request, User $user): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getUser_id(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($user);
+            $user->setUserDeleted(true);
+            $em->persist($user);
             $em->flush();
         }
 
         return $this->redirectToRoute('user_index');
+    }
+
+    /**
+     * @Route("/user/details/{user_id}", name="user_details")
+     * @param int $id
+     * @return Response
+     */
+    public function getUserDetails(int $id): Response
+    {
+        $user = $this->getDoctrine()->getRepository('App:User')->find($id);
+        return $this->render("pages/user_details.html.twig",array(
+            'title'=>"Détails d'utilisateur",
+            'connected'=>true,
+            'user'=>$user,
+        ));
     }
 }

@@ -31,7 +31,7 @@ class DocController extends Controller
         return $this->render('pages/doc-details.html.twig',array(
             'doc'=>$doc,
             'connected'=> true,
-            'title'=>"Details"
+            'title'=>"Document détails"
         ));
     }
 
