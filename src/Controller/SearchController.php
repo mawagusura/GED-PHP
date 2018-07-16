@@ -30,8 +30,7 @@ class SearchController extends AbstractController
         $params['filtre0']='%'.$researchTag[0].'%';
 
         for ($i = 1; $i <count($researchTag) ; $i++) {
-            print(' '.$researchTag[$i]);
-            $params['filtre'.$i]='%'.$researchTag[$i].'%';
+            $params['filtre'.$i]='%'.trim($researchTag[$i]).'%';
             $sql=$sql." OR name LIKE :filtre".$i;
         }
         
@@ -51,7 +50,8 @@ class SearchController extends AbstractController
             'title' => "Recherche d'un fichier",
             'connected' => true,
             'listFile' => $result,
-            'listFolder' => array()
+            'listFolder' => array(),
+            'listWord' => $filtre
             ]);
     }
 

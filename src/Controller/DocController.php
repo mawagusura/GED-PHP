@@ -46,13 +46,13 @@ class DocController extends Controller
         
         for($i=0;$i<count($types);$i++){
             $name[$i]=$types[$i]->getTypeName();
-            print($name[$i]);
         }
 
         
         
         for($i=0;$i<count($types);$i++) {
            $value[$i]=count($this->getDoctrine()->getRepository('App:File')->findBy(array('type' => $types[$i])));
+
         }
         
         $docs=$this->getDoctrine()->getRepository('App:File')->findAll();
