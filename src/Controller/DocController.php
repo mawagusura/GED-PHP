@@ -41,20 +41,26 @@ class DocController extends Controller
     public function stats():Response
     {
         $types=$this->getDoctrine()->getRepository('App:DocType')->findAll();
-        $name=array(count($types));
-        $value=array(count($types));
-
+        $value=array();
+        $name=array();
+        
         for($i=0;$i<count($types);$i++){
             $name[$i]=$types[$i]->getTypeName();
+            print($name[$i]);
         }
+
+        
+        
         for($i=0;$i<count($types);$i++) {
-            $value[$i]= count($this->getDoctrine()->getRepository('App:File')->findBy(array('type_id' => $types($i)->getId())));
+           $value[$i]=count($this->getDoctrine()->getRepository('App:File')->findBy(array('type' => $types[$i])));
         }
+        
         $docs=$this->getDoctrine()->getRepository('App:File')->findAll();
         $sizeTotal=0;
         foreach($docs as $doc){
             $sizeTotal+=$doc->getSize();
         }
+
         return $this->render('pages/stats.html.twig',array(
             'title'=>"Stats",
             'connected'=>true,
