@@ -55,10 +55,10 @@ class UserController extends Controller
     /**
      * @Route("/{user_id}", name="user_show", methods="GET")
      */
-    public function show(User $user): Response
+    public function show(int $user_id): Response
     {
         return $this->render('user/show.html.twig', [
-            'user' => $user,
+            'user' => $this->getDoctrine()->getRepository('App:User')->find($user_id),
             'title'=>"Visualisation Utilisateur",
             'connected'=>true
         ]);
