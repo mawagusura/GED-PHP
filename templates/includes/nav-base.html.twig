@@ -19,6 +19,7 @@
             <ul class="navbar-nav">
                 {% if is_granted('ROLE_ADMIN') %}
                     <a href="/admin/stats"><button class="btn btn-secondary my-2 my-sm-0">Statistiques</button></a>
+                    <a href="/admin/user"><button style="margin-left:10px" class="btn btn-secondary my-2 my-sm-0">Gestion des utilisateurs</button></a>
                         {% endif %}
                 <li class="nav-item dropdown">
 
@@ -27,9 +28,10 @@
                         {{ app.user.username }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ path('account') }}">Fiche utilisateur</a>
                         <a class="dropdown-item" href="#">Changer mot de passe</a>
                         <a class="dropdown-item" href="{{ path('security_logout') }}">Déconnexion</a>
-                        <a class="dropdown-item" href="{{ path('account') }}">Fiche utilisateur</a>
+                        
                     </div>
                 </li>
             </ul>

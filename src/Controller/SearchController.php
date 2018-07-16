@@ -24,30 +24,27 @@ class SearchController extends Controller
 
         
         $filtre=$req->request->get('filtre');
-        $researchTag=preg_split("/[\s,]+/",$filtre);
+        $researchTag=preg_split("/[,]+/",$filtre);
 
 
         
         $result = $this->getDoctrine()->getRepository("App:File")->createQueryBuilder('c')
-            ->where('c.folder <> 4')
-            ->orWhere('c.name LIKE :filtre0');
+            ->orWhere('c.name LIKE :filtre0')
+            ->orWhere('c.tags LIKE :filtre0');
+            
 
         $params['filtre0']='%'.$researchTag[0].'%';
-        $result=$result->orWhere('c.name LIKE :filtre0');
-
 
         for ($i = 1; $i <count($researchTag) ; $i++) {
-            $params['filtre'.$i]='%'.trim($researchTag[$i]).'%';
+            $params['filtre'.$i]='%'.$researchTag[$i].'%';
             $result = $result->orWhere('c.name LIKE :filtre'.$i)
                 ->orWhere('c.tags LIKE :filtre'.$i);
                 
             
-            
         }
-        
+        $result = $result->andWhere('c.folder <>4');
         
         for($i = 0; $i <count($researchTag) ; $i++){
-            print($i);
             $result = $result->setParameter('filtre'.$i, $params['filtre'.$i]);
 
         }
