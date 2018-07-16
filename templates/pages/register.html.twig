@@ -11,13 +11,13 @@
 
         <div class="form-group {% if form_errors(form.user_first_name) %}has-danger{% endif %}">
             <label for="user_first_name">Nom</label>
-            <input type="text" id="user_first_name" name="user[user_first_name]" required="required" placeholder="Prénom" class="form-control {% if form_errors(form.user_first_name) %}is-invalid{% endif %}"/>
+            <input type="text" id="user_first_name" name="user[user_first_name]" required="required" placeholder="Nom" class="form-control {% if form_errors(form.user_first_name) %}is-invalid{% endif %}"/>
             <div class="invalid-feedback">Ce champs est invalide.</div>
         </div>
 
         <div class="form-group {% if form_errors(form.user_last_name) %}has-danger{% endif %}">
             <label for="user_last_name">Prénom</label>
-            <input type="text" id="user_last_name" name="user[user_last_name]" required="required" placeholder="Nom" class="form-control {% if form_errors(form.user_last_name) %}is-invalid{% endif %}"/>
+            <input type="text" id="user_last_name" name="user[user_last_name]" required="required" placeholder="Prénom" class="form-control {% if form_errors(form.user_last_name) %}is-invalid{% endif %}"/>
             <div class="invalid-feedback">Ce champs est invalide.</div>
         </div>
 
