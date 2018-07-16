@@ -11,9 +11,20 @@
     
         <span class="navbar-brand" href="#">{{ doc.name }}</span>
 
-        <button onClick='printJS("{{ doc.data }}","{{ doc.type.typeName }}");' class="btn btn-secondary float-right">
-            <i class="fa fa-file-alt" aria-hidden="true"></i>
-        </button>
+        <div class="float-right">
+            <a class="btn btn-success " href="{{ path('doc_show', {'id': doc.id}) }}" data-toggle="tooltip" title="Prévisualiser" >
+                {% if doc.type.typename == 'image' %}
+                    <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                {%  else %}
+                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                {% endif %}
+            </a>
+
+            <a class="btn btn-info " href="{{ path('doc_show', {'id': doc.id}) }}" target="_blank" data-toggle="tooltip" title="Nouvel onglet">
+                <i class="fa fa-external-link" aria-hidden="true"></i>
+            </a>
+
+        </div>
     </nav>
     <div class="ml-2 doc-infos">
         <p><b>Auteur :</b> {{ doc.author.username }}<br/>
