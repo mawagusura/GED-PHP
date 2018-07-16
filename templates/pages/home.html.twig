@@ -1,28 +1,37 @@
-{% extends 'includes/base-template.html.twig' %} 
-{% block body %}
+{% extends 'includes/base-template.html.twig' %} {% block body %}
 
-<nav aria-label="breadcrumb">
-	<ol class="breadcrumb path-banner">
-		<div style="width: 70%">
-			<li class="breadcrumb-item" aria-current="page"><a href="{{ path('home') ~ '?folderID=1'}}">Racine</a></li> 
-			{% for folder in parents %} 
-			{% if folder.getId == root_folder.getId %}
-			<li class="breadcrumb-item active" aria-current="page"><a
-				class="align-self-center"
-				href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{folder.name }}</a></li> {% else %}
-			<li class="breadcrumb-item" aria-current="page"><a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{folder.name }}</a></li> 
-				{% endif %} 
-				{% endfor %}
-		</div>
+<div class="d-flex">
+	<div class="mr-auto p-2">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb path-banner">
+				<div>
+					<li class="breadcrumb-item" aria-current="page"><a
+						href="{{ path('home') ~ '?folderID=1'}}">Racine</a></li> {% for folder
+					in parents %} {% if folder.getId == root_folder.getId %}
+					<li class="breadcrumb-item active" aria-current="page"><a
+						class="align-self-center"
+						href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{folder.name
+							}}</a></li> {% else %}
+					<li class="breadcrumb-item" aria-current="page"><a
+						href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{folder.name
+							}}</a></li> {% endif %} {% endfor %}
+				</div>
+	</div>
+	<div class="p-2">
 
-		<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#ajoutFichier">Ajouter un Fichier</button>
+
+		<button type="button" class="btn btn-primary float-right"
+			data-toggle="modal" data-target="#ajoutFichier">Ajouter un
+			Fichier</button>
 
 		<!-- Modal -->
-		<div class="modal fade" id="ajoutFichier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="ajoutFichier" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Ajouter un fichier</h5>
+						<h5 class="modal-title" id="exampleModalLabel">Ajouter un
+							fichier</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -34,9 +43,11 @@
 
 						<!-- TAGS -->
 						<div class="form-group">
-							<label class="col-form-label" for="inputDefault">Tags</label> <input class="form-control" placeholder="Tag, Tag, Tag, Tag ..." id="inputDefault" type="text">
+							<label class="col-form-label" for="inputDefault">Tags</label> <input
+								class="form-control" placeholder="Tag, Tag, Tag, Tag ..."
+								id="inputDefault" type="text">
 						</div>
-						
+
 						<!-- Description -->
 						<div class="form-group">
 							<label for="exampleTextarea">Description</label>
@@ -59,6 +70,8 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="p-2">
 
 		<button type="button" class="btn btn-primary float-right"
 			data-toggle="modal" data-target="#ajoutDossier"
@@ -70,7 +83,8 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Ajouter un dossier</h5>
+						<h5 class="modal-title" id="exampleModalLabel">Ajouter un
+							dossier</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -92,8 +106,10 @@
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
 
-	</ol>
+</ol>
 
 </nav>
 
@@ -127,7 +143,8 @@
 					{% for folder in listFolder if folder.getId != 1 %}
 					<tr>
 						<th scope="row"></th>
-						<td><a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{folder.name }}/</a></td>
+						<td><a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{folder.name
+								}}/</a></td>
 						<td></td>
 						<td>folder</td>
 						<td></td>
@@ -137,12 +154,12 @@
 									<i class="fa fa-trash" aria-hidden="true"></i>
 								</button></a></td>
 					</tr>
-					{% endfor %} 
-					{% for file in listFile %}
+					{% endfor %} {% for file in listFile %}
 					<tr>
 						<th scope="row"></th>
 						<td><span class="file-clickable"
-							value="{{ path('doc_details',  {'id' : file.id}) }}">{{file.name }}</span></td>
+							value="{{ path('doc_details',  {'id' : file.id}) }}">{{file.name
+								}}</span></td>
 						<td>{{ file.dateCreation|date('d/m/Y')}}</td>
 						<td>{{ file.type.typeName }}</td>
 						<td>{{ file.size }}</td>
@@ -159,10 +176,16 @@
 		</div>
 	</div>
 
-    {% block javascripts %}
-        <script>
-            $(".file-clickable").click( function() {
-                $(".iframe-docdetails").attr("src", this.getAttribute("value"));
-            })
-        </script>
+	<div class="col-md-4 docdetails-panel">
+		<iframe src="" class="iframe-docdetails" seamless> </iframe>
+	</div>
+</div>
+
+{% block javascripts %}
+<script src="{{ asset('js/print-js/dist/print.js') }}"></script>
+<script>
+	            $(".file-clickable").click( function() {
+	                $(".iframe-docdetails").attr("src", this.getAttribute("value"));
+	            })
+	        </script>
 {% endblock %} {% endblock %}
