@@ -28,12 +28,12 @@
                     {% for file in listFile %}
                         <tr>
                             <th scope="row"> </th>
-                            <td><span class="file-clickable" value="{{ path('doc_details',  {'id' : file['id']}) }}">{{ file['name'] }}</span></td>
-                            <td>{{ file['date_last_modification'] }}</td>
-                            <td>{{ file['type_name'] }} </td>
-                            <td>{{ file['size'] }} </td>
-                            <td>{{ file['username'] }} </td>
-                            <td><a href="{{path('doc_delete',  {'id' : file['id']}) }}">
+                            <td><span class="file-clickable" value="{{ path('doc_details',  {'id' : file.id}) }}">{{ file.name }}</span></td>
+                            <td>{{ file.dateCreation|date('d/m/Y')}}</td>
+                            <td>{{ file.type.typeName }} </td>
+                            <td>{{ file.size }} </td>
+                            <td>{{ file.author.username }} </td>
+                            <td><a href="{{path('doc_delete',  {'id' : file.id}) }}">
                                     <button class="btn btn-muted"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                 </a></td>
                         </tr>
