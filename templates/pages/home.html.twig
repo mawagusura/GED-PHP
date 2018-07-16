@@ -1,170 +1,174 @@
-{% extends 'includes/base-template.html.twig' %}
-
+{% extends 'includes/base-template.html.twig' %} 
 {% block body %}
 
-    <nav aria-label="breadcrumb"> 
-        <ol class="breadcrumb path-banner row">
-        <div class="d-flex align-items-center col-md-8">
-                <li class="breadcrumb-item" aria-current="page"><a href="{{ path('home') ~ '?folderID=1'}}">Racine</a></li>
-                {% for folder in parents %}
-                    {% if folder.getId == root_folder.getId %}
-                        <li class="breadcrumb-item active" aria-current="page">
-                            <a class="align-self-center" href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a>
-                        </li>
-                    {% else %}
-                        <li class="breadcrumb-item" aria-current="page">
-                            <a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-        </div>
-        <div class="buttons-files col-md-4">
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb path-banner">
+		<div style="width: 70%">
+			<li class="breadcrumb-item" aria-current="page"><a href="{{ path('home') ~ '?folderID=1'}}">Racine</a></li> 
+			{% for folder in parents %} 
+			{% if folder.getId == root_folder.getId %}
+			<li class="breadcrumb-item active" aria-current="page"><a
+				class="align-self-center"
+				href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{folder.name }}</a></li> {% else %}
+			<li class="breadcrumb-item" aria-current="page"><a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{folder.name }}</a></li> 
+				{% endif %} 
+				{% endfor %}
+		</div>
 
-            <button type="button" class="btn btn-primary button-file float-right" data-toggle="modal" data-target="#ajoutFichier">Ajouter un Fichier</button>
+		<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#ajoutFichier">Ajouter un Fichier</button>
 
-			<!-- Modal -->
-			<div class="modal fade" id="ajoutFichier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">Ajouter un fichier</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div class="modal-body">
-			        <!-- Nom, tags, Description,importer fichier -->
-
-					        
-			        <!-- TAGS -->
-			        <div class="form-group">
-					  <label class="col-form-label" for="inputDefault">Tags</label>
-					  <input class="form-control" placeholder="Tag, Tag, Tag, Tag ..." id="inputDefault" type="text">
+		<!-- Modal -->
+		<div class="modal fade" id="ajoutFichier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Ajouter un fichier</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
 					</div>
-			        
-			        <!-- Description -->
-			        <div class="form-group">
-				      <label for="exampleTextarea">Description</label>
-				      <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-			   		</div>
-			        
-			        <!-- import -->
-			        <div class="form-group">
-				      <label for="exampleInputFile">Fichier</label>
-				      <input class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" type="file">
-			    	</div>
-			    
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-			        <button type="button" class="btn btn-primary">Ajouter</button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-	
-			<button type="button" class="btn btn-primary float-right button-file" data-toggle="modal" data-target="#ajoutDossier">
-			  Ajouter un Dossier
-			</button>
-			
-			<!-- Modal -->
-			<div class="modal fade" id="ajoutDossier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">Ajouter un dossier</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div class="modal-body">
-			        <!-- Nom -->
-			        <div class="form-group">
-					  <label class="col-form-label" for="inputDefault">Nom</label>
-					  <input class="form-control" placeholder="Nom du dossier" id="inputDefault" type="text">
+					<div class="modal-body">
+						<!-- Nom, tags, Description,importer fichier -->
+
+
+						<!-- TAGS -->
+						<div class="form-group">
+							<label class="col-form-label" for="inputDefault">Tags</label> <input class="form-control" placeholder="Tag, Tag, Tag, Tag ..." id="inputDefault" type="text">
+						</div>
+						
+						<!-- Description -->
+						<div class="form-group">
+							<label for="exampleTextarea">Description</label>
+							<textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+						</div>
+
+						<!-- import -->
+						<div class="form-group">
+							<label for="exampleInputFile">Fichier</label> <input
+								class="form-control-file" id="exampleInputFile"
+								aria-describedby="fileHelp" type="file">
+						</div>
+
 					</div>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-			        <button type="button" class="btn btn-primary">Ajouter</button>
-			      </div>
-			    </div>
-			  </div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Annuler</button>
+						<button type="button" class="btn btn-primary">Ajouter</button>
+					</div>
+				</div>
 			</div>
-        </div>
-        </ol>
+		</div>
 
-    </nav>
+		<button type="button" class="btn btn-primary float-right"
+			data-toggle="modal" data-target="#ajoutDossier"
+			style="text-align: right;">Ajouter un Dossier</button>
 
-    <div class="row">
-        <div class="col-md-8 no-margin">
-            <div class="files-tab ml-1">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Nom</th>
-                        <th scope="col">Date de création</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Taille</th>
-                        <th scope="col">Créateur</th>
-                        <th scope="col">Supprimer</th>
-                        </tr>
-                    </thead>
+		<!-- Modal -->
+		<div class="modal fade" id="ajoutDossier" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Ajouter un dossier</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<!-- Nom -->
+						<div class="form-group">
+							<label class="col-form-label" for="inputDefault">Nom</label> <input
+								class="form-control" placeholder="Nom du dossier"
+								id="inputDefault" type="text">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Annuler</button>
+						<button type="button" class="btn btn-primary">Ajouter</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
-                    <tbody>
-                    <tr>
-                        <th scope="row"> </th>
-                        <td><a href="{{ path('home') ~ '?folderID=' ~ root_folder.parent.id }}">../</a></td>
-                        <td></td>
-                        <td>folder</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    {% for folder in listFolder if folder.getId != 1 %}
-                        <tr>
-                            <th scope="row"> </th>
-                            <td><a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}/</a></td>
-                            <td></td>
-                            <td>folder</td>
-                            <td></td>
-                            <td></td>
-                            <td><a href="{{path('folder_delete',  {'id' : folder.id}) }}"><button class="btn btn-muted"><i class="fa fa-trash" aria-hidden="true"></i></button></a></td>
-                        </tr>
-                    {% endfor %}
-                    {% for file in listFile %}
-                        <tr>
-                            <th scope="row"> </th>
-                            <td><span class="file-clickable" value="{{ path('doc_details',  {'id' : file.id}) }}">{{ file.name }}</span></td>
-                            <td>{{ file.dateCreation|date('d/m/Y')}}</td>
-                            <td>{{ file.type.typeName }} </td>
-                            <td>{{ file.size }} </td>
-                            <td>{{ file.author.username }} </td>
-                            <td><a href="{{path('doc_delete',  {'id' : file.id}) }}">
-                                    <button class="btn btn-muted"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                                </a></td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+	</ol>
 
-        <div class="col-md-4 docdetails-panel">
-            <iframe src=""
-                    class="iframe-docdetails"
-                    seamless>
-            </iframe>
-        </div>
-    </div>
+</nav>
 
-    {% block javascripts %}
-        <script src="{{ asset('js/print-js/dist/print.js') }}"></script>
-        <script>
+<div class="row">
+	<div class="col-md-8 no-margin">
+		<div class="files-tab ml-1">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col"></th>
+						<th scope="col">Nom</th>
+						<th scope="col">Date de création</th>
+						<th scope="col">Type</th>
+						<th scope="col">Taille</th>
+						<th scope="col">Créateur</th>
+						<th scope="col">Supprimer</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<th scope="row"></th>
+						<td><a
+							href="{{ path('home') ~ '?folderID=' ~ root_folder.parent.id }}">../</a></td>
+						<td></td>
+						<td>folder</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					{% for folder in listFolder if folder.getId != 1 %}
+					<tr>
+						<th scope="row"></th>
+						<td><a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{folder.name }}/</a></td>
+						<td></td>
+						<td>folder</td>
+						<td></td>
+						<td></td>
+						<td><a href="{{path('folder_delete',  {'id' : folder.id}) }}"><button
+									class="btn btn-muted">
+									<i class="fa fa-trash" aria-hidden="true"></i>
+								</button></a></td>
+					</tr>
+					{% endfor %} 
+					{% for file in listFile %}
+					<tr>
+						<th scope="row"></th>
+						<td><span class="file-clickable"
+							value="{{ path('doc_details',  {'id' : file.id}) }}">{{file.name }}</span></td>
+						<td>{{ file.dateCreation|date('d/m/Y')}}</td>
+						<td>{{ file.type.typeName }}</td>
+						<td>{{ file.size }}</td>
+						<td>{{ file.author.username }}</td>
+						<td><a href="{{path('doc_delete',  {'id' : file.id}) }}">
+								<button class="btn btn-muted">
+									<i class="fa fa-trash" aria-hidden="true"></i>
+								</button>
+						</a></td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="col-md-4 docdetails-panel">
+		<iframe src="" class="iframe-docdetails" seamless> </iframe>
+	</div>
+</div>
+
+{% block javascripts %}
+<script src="{{ asset('js/print-js/dist/print.js') }}"></script>
+<script>
             $(".file-clickable").click( function() {
                 $(".iframe-docdetails").attr("src", this.getAttribute("value"));
             })
         </script>
-    {% endblock %}
-{% endblock %}
+{% endblock %} {% endblock %}
