@@ -1,7 +1,7 @@
 {% extends 'includes/base-template.html.twig' %} {% block body %}
 <nav aria-label="breadcrumb">
 
-	<ol class="breadcrumb" style="width:70%">
+	<ol class="breadcrumb">
 		<li aria-current="page">Recherche : &nbsp;</li>
 		<li aria-current="page">{{listWord}}</li>
 	</ol>
@@ -39,6 +39,9 @@
                     </tbody>
                 </table>
             </div>
+        <div class="col-md-4 docdetails-panel">
+            <iframe src="" class="iframe-docdetails" seamless> </iframe>
+        </div>
         </div>
 
 {% block javascripts %}
