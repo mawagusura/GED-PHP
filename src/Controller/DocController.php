@@ -13,6 +13,7 @@ use App\Entity\File;
 use App\Entity\Folder;
 use App\Form\DocForm;
 use App\Form\FolderForm;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -64,7 +65,7 @@ class DocController extends Controller
                 $response->headers->set('Content-Type', 'application/pdf');
                 break;
             case 'jpg':
-                $response->headers->set('Content-Type', 'image/jpg');
+                $response->headers->set('Content-Type', 'image/jpeg');
                 $response->headers->set('Content-Disposition', 'inline;filename='.$doc->getName());
                 break;
             default:
@@ -87,8 +88,6 @@ class DocController extends Controller
             $name[$i]=$types[$i]->getTypeName() . '/' . $types[$i]->getExtension();
         }
 
-        
-        
         for($i=0;$i<count($types);$i++) {
            $value[$i]=count($this->getDoctrine()->getRepository('App:File')->findBy(array('type' => $types[$i])));
 
@@ -131,13 +130,15 @@ class DocController extends Controller
 
             // vérification du formulaire
             $file = $form['data']->getData();
+            if(!$file){
+                throw new Exception("Le fichier est vide");
+            }
             $extension = $file->guessExtension();
             $type = $this->getDoctrine()->getRepository('App:DocType')->findOneBy(array('extension' =>$extension));
 
             if (!$extension || !$type) {
                 // extension cannot be guessed
-                // TODO Throw erreur
-                print("Type de fichier non reconnu non reconnu");
+                throw new \InvalidArgumentException("Type de fichier non reconnu non reconnu");
             }
             else {
                 // on récupère le user
@@ -167,9 +168,10 @@ class DocController extends Controller
 
     /**
      * @param int $id
+     * @param Request $request
      * @return Response
      */
-    public function deleteDocument(int $id): Response
+    public function deleteDocument(int $id, Request $request): Response
     {
         $doc = $this->getDoctrine()->getRepository('App:File')->find($id);
         $folder=$this->getDoctrine()->getRepository('App:Folder')->find(4);
@@ -178,7 +180,14 @@ class DocController extends Controller
         $em->persist($doc);
         $em->flush();
 
-        return $this->redirectToRoute('home');
+        $rootID = $request->query->get('folderID');
+        if($rootID == NULL) {
+            $rootID = 1;
+        }
+
+        return $this->redirectToRoute('home', array(
+            'folderID' => $rootID
+        ));
     }
 
 
