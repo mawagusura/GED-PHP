@@ -84,7 +84,7 @@ class DocController extends Controller
         $name=array();
         
         for($i=0;$i<count($types);$i++){
-            $name[$i]=$types[$i]->getTypeName();
+            $name[$i]=$types[$i]->getTypeName() . '/' . $types[$i]->getExtension();
         }
 
         
