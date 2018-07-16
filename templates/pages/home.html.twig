@@ -51,7 +51,7 @@
                 <td>folder</td>
                 <td></td>
                 <td></td>
-                <td><a href="#"><img src="{{ asset('images/th.jpg') }}" width="30" height="30" alt=""></a></td>
+                <td><a href="{{path('folder_delete',  {'id' : folder.id}) }}"><img src="{{ asset('images/th.jpg') }}" width="30" height="30" alt=""></a></td>
             </tr>
         {% endfor %}
         {% for file in listFile %}
@@ -62,7 +62,7 @@
                 <td>{{ file.type.typeName }} </td>
                 <td>{{ file.size }} </td>
                 <td>{{ file.author.username }} </td>
-                <td><a href="#"><img src="{{ asset('images/th.jpg') }}" width="30" height="30" alt=""></a></td>
+                <td><a href="{{path('doc_delete',  {'id' : file.id}) }}"><img src="{{ asset('images/th.jpg') }}" width="30" height="30" alt=""></a></td>
             </tr>
         {% endfor %}
         </tbody>

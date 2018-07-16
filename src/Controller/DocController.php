@@ -122,7 +122,27 @@ class DocController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($doc);
         $em->flush();
-        return $this->redirect('pages/home.html.twig');
+
+        
+        $rootID = 1;
+        
+        $root = $this->getDoctrine()->getRepository('App:Folder')->find($rootID);
+
+        // Fetch the list of the parents
+        $parents = $root->getAllParents();
+
+        // Fetch all files and directories
+        $folders = $root->getChildrens();
+        $files = $root->getFiles();
+
+        return $this->render('pages/home.html.twig',[
+            'title' => 'Navigation',
+            'connected' => true,
+            'root_folder' => $root,
+            'parents' => $parents,
+            'listFolder'=> $folders,
+            'listFile' => $files
+        ]);
     }
 
 
@@ -139,6 +159,27 @@ class DocController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($folder);
         $em->flush();
-        return $this->redirect('pages/home.html.twig');
+
+        
+        $rootID = 1;
+        
+        $root = $this->getDoctrine()->getRepository('App:Folder')->find($rootID);
+
+        // Fetch the list of the parents
+        $parents = $root->getAllParents();
+
+        // Fetch all files and directories
+        $folders = $root->getChildrens();
+        $files = $root->getFiles();
+
+        return $this->render('pages/home.html.twig',[
+            'title' => 'Navigation',
+            'connected' => true,
+            'root_folder' => $root,
+            'parents' => $parents,
+            'listFolder'=> $folders,
+            'listFile' => $files
+        ]);
     }
+
 }
