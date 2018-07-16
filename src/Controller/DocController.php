@@ -85,15 +85,19 @@ class DocController extends Controller
             $extension = $file->guessExtension();
             if (!$extension) {
                 // extension cannot be guessed
-                $extension = 'bin';
+
+                // TODO Throw erreur
+            }
+            else if($this->getDoctrine()->getRepository('App:DocType')->findOneBy($extension)==NULL){
+                // TODO throw erreur type non supporté
             }
 
             // on récupère le user
-            $securityContext = $this->container->get('security.authorization_checker');
-            if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-                $user = $this->get('security.context')->getToken()->getUser();
-                $doc->setAuthor($user);
-            }
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            $user = $this->getUser();
+
+            $doc->setAuthor($user);
+
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($doc);

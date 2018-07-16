@@ -69,6 +69,11 @@ class File
      */
     private $type;
 
+    public function __construct()
+    {
+        $this->date_creation = new \DateTime();
+    }
+
     public function getId()
     {
         return $this->id;

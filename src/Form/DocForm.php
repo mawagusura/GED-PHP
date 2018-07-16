@@ -25,7 +25,6 @@ class DocForm extends AbstractType
             ->add('name',TextType::class)
             ->add('description',TextType::class)
             ->add('tags', TextType::class)
-            ->add('type',TextType::class)
             ->add('data', FileType::class)
         ;
     }
