@@ -27,8 +27,8 @@
         <label>Tags</label>:&nbsp;<label>{{ doc.tags }}</label>
     </div>
     <div>
-        <button onClick='printJS();'>
-            Print HTML
+        <button onClick='printJS("{{ doc.data }}","{{ doc.type.typeName }}");'>
+            Imprimer le fichier
         </button>
     </div>
 
