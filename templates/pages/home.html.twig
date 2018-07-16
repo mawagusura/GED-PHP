@@ -160,7 +160,6 @@
     </div>
 
     {% block javascripts %}
-        <script src="{{ asset('js/print-js/dist/print.js') }}"></script>
         <script>
             $(".file-clickable").click( function() {
                 $(".iframe-docdetails").attr("src", this.getAttribute("value"));
