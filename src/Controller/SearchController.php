@@ -25,25 +25,36 @@ class SearchController extends Controller
         
         $filtre=$req->request->get('filtre');
         $researchTag=preg_split("/[\s,]+/",$filtre);
+
+
         
-        $sql="select * from file left join user on user.id=file.author_id left join doc_type on doc_type.id=file.type_id where folder_id <> 4 and name LIKE :filtre0";
+        $result = $this->getDoctrine()->getRepository("App:File")->createQueryBuilder('c')
+            ->where('c.folder <> 4')
+            ->orWhere('c.name LIKE :filtre0');
+
         $params['filtre0']='%'.$researchTag[0].'%';
+        $result=$result->orWhere('c.name LIKE :filtre0');
+
 
         for ($i = 1; $i <count($researchTag) ; $i++) {
             $params['filtre'.$i]='%'.trim($researchTag[$i]).'%';
-            $sql=$sql." OR name LIKE :filtre".$i;
+            $result = $result->orWhere('c.name LIKE :filtre'.$i)
+                ->orWhere('c.tags LIKE :filtre'.$i);
+                
+            
+            
         }
+        
         
         for($i = 0; $i <count($researchTag) ; $i++){
-            $sql=$sql." OR tags LIKE :filtre".$i;
+            print($i);
+            $result = $result->setParameter('filtre'.$i, $params['filtre'.$i]);
 
         }
+        $result = $result->getQuery()
+            ->getResult();
         
         
-        $stmt = $this->getDoctrine()->getManager();
-        $stmt=$stmt->getConnection()->prepare($sql);
-        $stmt->execute($params);
-        $result=$stmt->fetchAll();
 
 
         return $this->render('pages/search.html.twig',[
