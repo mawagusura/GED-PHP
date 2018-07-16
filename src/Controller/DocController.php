@@ -90,9 +90,11 @@ class DocController extends Controller
      */
     public function deleteDocument(int $id): Response
     {
-        $doc = $this->getDoctrine()->getRepository('App:Doc')->find($id);
+        $doc = $this->getDoctrine()->getRepository('App:File')->find($id);
+        $folder=$this->getDoctrine()->getRepository('App:Folder')->find(4);
+        $doc->setFolder($folder);
         $em = $this->getDoctrine()->getManager();
-        $em->remove($doc);
+        $em->persist($doc);
         $em->flush();
         return $this->render('pages/home.html.twig');
     }
