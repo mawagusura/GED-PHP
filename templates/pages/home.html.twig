@@ -2,16 +2,14 @@
 
 {% block body %}
 
-    <nav aria-label="breadcrumb">
-        <div class="files-actions-buttons float-right">
-            <button type="button" class="btn btn-primary add-file-btn">Ajouter un Fichier</button>
-        </div>
+    <nav aria-label="breadcrumb"> 
         <ol class="breadcrumb path-banner">
+        <div class="d-flex align-items-center" style="width:80%">
             <li class="breadcrumb-item" aria-current="page"><a href="{{ path('home') ~ '?folderID=1'}}">Racine</a></li>
             {% for folder in parents %}
                 {% if folder.getId == root_folder.getId %}
                     <li class="breadcrumb-item active" aria-current="page">
-                        <a href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a>
+                        <a class="align-self-center" href="{{ path('home') ~ '?folderID=' ~ folder.id}}">{{ folder.name }}</a>
                     </li>
                 {% else %}
                     <li class="breadcrumb-item" aria-current="page">
@@ -19,6 +17,84 @@
                     </li>
                 {% endif %}
             {% endfor %}
+            </div>
+            
+            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#ajoutFichier">Ajouter un Fichier</button>
+
+			<!-- Modal -->
+			<div class="modal fade" id="ajoutFichier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Ajouter un fichier</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <!-- Nom, tags, Description,importer fichier -->
+			        
+			        <!-- Nom -->
+			        <div class="form-group">
+					  <label class="col-form-label" for="inputDefault">Titre</label>
+					  <input class="form-control" placeholder="Nom du fichier" id="inputDefault" type="text">
+					</div>
+					        
+			        <!-- TAGS -->
+			        <div class="form-group">
+					  <label class="col-form-label" for="inputDefault">Tags</label>
+					  <input class="form-control" placeholder="Tag, Tag, Tag, Tag ..." id="inputDefault" type="text">
+					</div>
+			        
+			        <!-- Description -->
+			        <div class="form-group">
+				      <label for="exampleTextarea">Description</label>
+				      <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+			   		</div>
+			        
+			        <!-- import -->
+			        <div class="form-group">
+				      <label for="exampleInputFile">Fichier</label>
+				      <input class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" type="file">
+			    	</div>
+			    
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+			        <button type="button" class="btn btn-primary">Ajouter</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+	
+			<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#ajoutDossier" style="text-align: right;">
+			  Ajouter un Dossier
+			</button>
+			
+			<!-- Modal -->
+			<div class="modal fade" id="ajoutDossier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Ajouter un dossier</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <!-- Nom -->
+			        <div class="form-group">
+					  <label class="col-form-label" for="inputDefault">Nom</label>
+					  <input class="form-control" placeholder="Nom du dossier" id="inputDefault" type="text">
+					</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+			        <button type="button" class="btn btn-primary">Ajouter</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 
         </ol>
 
@@ -32,7 +108,7 @@
                         <tr>
                         <th scope="col"></th>
                         <th scope="col">Nom</th>
-                        <th scope="col">Dernière modification</th>
+                        <th scope="col">Date de création</th>
                         <th scope="col">Type</th>
                         <th scope="col">Taille</th>
                         <th scope="col">Créateur</th>
@@ -65,7 +141,7 @@
                         <tr>
                             <th scope="row"> </th>
                             <td><span class="file-clickable" value="{{ path('doc_details',  {'id' : file.id}) }}">{{ file.name }}</span></td>
-                            <td>{{ file.dateLastModification }}</td>
+                            <td>{{ file.dateCreation|date('d/m/Y')}}</td>
                             <td>{{ file.type.typeName }} </td>
                             <td>{{ file.size }} </td>
                             <td>{{ file.author.username }} </td>
