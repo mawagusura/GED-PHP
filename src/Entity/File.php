@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FileRepository")
  */
-class File
+class File implements \Serializable
 {
     /**
      * @ORM\Id()
@@ -197,5 +197,30 @@ class File
         $this->type = $type;
 
         return $this;
+    }
+
+    /**
+     * String representation of object
+     * @link http://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
+     */
+    public function serialize()  : string
+    {
+        return serialize([$this->id,$this->folder,$this->author,$this->data,$this->date_creation,$this->date_last_modification,$this->description,$this->name,$this->size,$this->tags,$this->type]);
+    }
+
+    /**
+     * Constructs the object
+     * @link http://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized) : void
+    {
+        [$this->id,$this->folder,$this->author,$this->data,$this->date_creation,$this->date_last_modification,$this->description,$this->name,$this->size,$this->tags,$this->type] = unserialize($serialized, ['allowed_classes' => false]);
     }
 }

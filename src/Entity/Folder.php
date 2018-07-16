@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FolderRepository")
  */
-class Folder
+class Folder implements \Serializable
 {
     /**
      * @ORM\Id()
@@ -154,4 +154,30 @@ class Folder
 
         return $parents;
     }
+
+    /**
+     * String representation of object
+     * @link http://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
+     */
+    public function serialize()  : string
+    {
+        return serialize([$this->id, $this->parent,$this->childrens,$this->files]);
+    }
+
+    /**
+     * Constructs the object
+     * @link http://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized) : void
+    {
+        [$this->id, $this->parent,$this->childrens,$this->files] = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
 }
