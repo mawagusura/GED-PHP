@@ -1,14 +1,17 @@
 {% extends 'includes/base-template.html.twig' %}
 
 {% block body %}
-
-    <div class="ml-2 doc-infos">
+<div class="body userdetails">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <span class="navbar-brand" href="#">Fiche utilisateur</span>
+    </nav>
+    <div class="ml-2 doc-infos" align="center">
         <p><b>Utilisateur :</b> {{ user.username }}<br/>
             <b>First name :</b> {{ user.userFirstName}}<br/>
             <b>Last name :</b> {{ user.userLastName }}<br/>
             <b>Role :</b> {% for role in user.roles %}
                         {{ role }},
             {%  endfor %}<br/>
-
     </div>
+</div>
 {% endblock %}
