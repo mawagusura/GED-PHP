@@ -90,12 +90,13 @@ class UserController extends Controller
     /**
      * @Route("/user/{user_id}", name="user_delete", methods="DELETE")
      * @param Request $request
-     * @param User $user
+     * @param int $user_id
      * @return Response
      */
-    public function delete(Request $request, User $user): Response
+    public function delete(Request $request, int $user_id): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getUser_id(), $request->request->get('_token'))) {
+        $user= $this->getDoctrine()->getRepository('App:User')->find($user_id);
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $user->setUserDeleted(true);
             $em->persist($user);
