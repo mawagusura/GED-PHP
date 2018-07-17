@@ -83,22 +83,27 @@ class DocController extends Controller
         $types=$this->getDoctrine()->getRepository('App:DocType')->findAll();
         $value=array();
         $name=array();
-        
+        $indice=array();
+
         for($i=0;$i<count($types);$i++){
             $name[$i]=$types[$i]->getTypeName() . '/' . $types[$i]->getExtension();
         }
         $em = $this->getDoctrine()->getManager();
-        $stmt= $em->getConnection()->prepare("select distinct folder_id from file where folder_id <>4"); 
+        $stmt= $em->getConnection()->prepare("select distinct id from folder where parent_id <>4"); 
         $stmt->execute();
         $result=$stmt->fetchAll();
+
+        for($i=0;$i<count($result);$i++){
+            $indice[$i]=$result[$i]['id'];
+        }
         
         for($i=0;$i<count($types);$i++) {
            $value[$i]=count($this->getDoctrine()->getRepository('App:File')->findBy(
-            ['type' => $types[$i],'folder'=> $result]));
+            ['folder'=>$indice,'type' => $types[$i]]));
 
         }
         
-        $docs=$this->getDoctrine()->getRepository('App:File')->findBy(['folder'=> $result]);
+        $docs=$this->getDoctrine()->getRepository('App:File')->findBy(['folder'=> $indice]);
         $sizeTotal=0;
         foreach($docs as $doc){
             $sizeTotal+=$doc->getSize();
