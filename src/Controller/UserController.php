@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 /**
  * @Route("/admin/user")
@@ -30,13 +32,26 @@ class UserController extends Controller
     /**
      * @Route("/new", name="user_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request,UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() ) {
+
+            $user->setUserFirstName($form->getData()->getUserFirstName());
+            $user->setUserLastName($form->getData()->getUserLastName());
+            $user->setUsername($form->getData()->getUsername());
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
+
+            // Par defaut l'utilisateur aura toujours le rôle ROLE_USER
+            $user->setRoles(['ROLE_USER']);
+
+            // l'utilisateur n'est pas supprimé
+            $user->setUserDeleted(false);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -67,16 +82,29 @@ class UserController extends Controller
     /**
      * @Route("/{user_id}/edit", name="user_edit", methods="GET|POST")
      */
-    public function edit(Request $request,int $user_id): Response
+    public function edit(Request $request,int $user_id,UserPasswordEncoderInterface $passwordEncoder ): Response
     {
         $user = $this->getDoctrine()->getRepository('App:User')->find($user_id);
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() ) {
+
+            $user->setUserFirstName($form->getData()->getUserFirstName());
+            $user->setUserLastName($form->getData()->getUserLastName());
+            $user->setUsername($form->getData()->getUsername());
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
+
+            // Par defaut l'utilisateur aura toujours le rôle ROLE_USER
+            $user->setRoles(['ROLE_USER']);
+
+            // l'utilisateur n'est pas supprimé
+            $user->setUserDeleted(false);
+
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_edit', ['user_id' => $user->getUser_id()]);
+            return $this->redirectToRoute('user_edit', ['user_id' => $user->getId()]);
         }
 
         return $this->render('user/edit.html.twig', [
