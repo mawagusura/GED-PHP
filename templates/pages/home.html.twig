@@ -112,6 +112,7 @@
 						<th scope="col">Date de création</th>
 						<th scope="col">Type</th>
 						<th scope="col">Taille</th>
+						<th scope="col">Tags</th>
 						<th scope="col">Créateur</th>
 						<th scope="col">Supprimer</th>
 					</tr>
@@ -127,6 +128,7 @@
 						<td></td>
 						<td></td>
 						<td></td>
+						<td></td>
 					</tr>
 					{% for folder in listFolder if folder.getId != 1 %}
 					<tr>
@@ -135,6 +137,7 @@
 								}}/</a></td>
 						<td></td>
 						<td>folder</td>
+						<td></td>
 						<td></td>
 						<td></td>
 						<td><a href="{{path('folder_delete',  {'id' : folder.id, 'folderID' : root_folder.getId}) }}"><button
@@ -151,6 +154,7 @@
 						<td>{{ file.dateCreation|date('d/m/Y')}}</td>
 						<td>{{ file.type.typeName }}</td>
 						<td>{{ file.size }} octets</td>
+						<td>{{ file.tags }}</td>
 						<td>{{ file.author.username }}</td>
 						<td><a href="{{path('doc_delete',  {'id' : file.id, 'folderID' : root_folder.getId}) }}">
 								<button class="btn btn-muted">
